@@ -5,11 +5,15 @@ import { AppComponent } from './app.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { EventComponent } from './event/event.component';
+import { EventDetailComponent } from './event-detail/event-detail.component';
+import { ShowListButtonComponent } from './show-list-button/show-list-button.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    EventComponent
+    EventComponent,
+    EventDetailComponent,
+    ShowListButtonComponent
   ],
   imports: [
     BrowserModule,
