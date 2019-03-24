@@ -14,8 +14,8 @@ export class StoryService {
 
   constructor() { }
 
-  getStories() {
+  getStories(eventId: number) {
     return this.stories;
   }
-  
+
 }

@@ -4,7 +4,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { StoriesComponent }      from './stories/stories.component';
 
 const routes: Routes = [
-  { path: 'stories', component: StoriesComponent }
+  { path: 'events/:eventId/stories', component: StoriesComponent }
 ];
 
 @NgModule({

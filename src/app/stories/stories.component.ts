@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Story } from '../story';
 import { StoryService } from '../story.service';
+import { ActivatedRoute } from '@angular/router';
+
+import { Story } from '../story';
 
 @Component({
   selector: 'app-stories',
@@ -11,10 +13,16 @@ export class StoriesComponent implements OnInit {
 
   stories: Story[]
 
-  constructor(private storyService: StoryService) { }
+  private eventId: number
+
+  constructor(private storyService: StoryService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.stories = this.storyService.getStories();
+    this.route.params.subscribe( params => {
+      this.eventId = params.eventId;
+    })
+    
+    this.stories = this.storyService.getStories(this.eventId);
   }
 
   showStory(story: Story) {

@@ -1,3 +1,8 @@
-<p>
-  story works!
-</p>
+<div *ngIf="story">
+
+  <h2><b>Story: </b> {{story.name | uppercase}}</h2>
+  <div><span>id: </span>{{story.id}}</div>
+  <p>{{story.description}}</p>
+
+</div>
+
