@@ -1,0 +1,5 @@
+<ul>
+  <li *ngFor="let story of stories" (click)="showStory(story)">
+    {{story.name | uppercase}}
+  </li>
+</ul>
