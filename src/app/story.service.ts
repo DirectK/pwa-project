@@ -7,9 +7,9 @@ import { Story } from './story';
 export class StoryService {
 
   stories: Story[] = [
-    {id: 1, name: "Story1", description: "Story1 description", images: {}},
-    {id: 2, name: "Story2", description: "Story2 description", images: {}},
-    {id: 3, name: "Story3", description: "Story3 description", images: {}}
+    {eventid:1, id: 1, name: 'cat' , description:'lame', images: null},
+    {eventid:2, id: 2, name: 'dog' , description:'lame', images: null},
+    {eventid:3, id: 3, name: 'shit' , description:'lame', images: null},
   ] 
 
   constructor() { }
