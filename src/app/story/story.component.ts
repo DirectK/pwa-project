@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { STORIES } from '../mock-stories';
 import { Story } from '../story';
 
 @Component({
@@ -8,7 +9,7 @@ import { Story } from '../story';
 })
 export class StoryComponent implements OnInit {
 
-  story: Story
+  @Input() story: Story;
 
   constructor() { }
 
