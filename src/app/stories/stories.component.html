@@ -1,5 +1,6 @@
-<ul class="events">
-  <li *ngFor="let story of stories" [routerLink]="['/events', eventId, 'stories', story.id]">
+<mat-nav-list>
+  <a mat-list-item *ngFor="let story of stories"
+      [routerLink]="['/events', eventId, 'stories', story.id]">
     <span class="badge">{{story.id}}</span> {{story.name}}
-  </li>
-</ul>
+  </a>
+</mat-nav-list>

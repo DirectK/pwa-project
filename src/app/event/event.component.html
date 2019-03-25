@@ -1,8 +1,8 @@
-<h2>EVENTS!!!!!!!</h2>
+<h2>EVENTS</h2>
 
-<ul class="events">
-  <li *ngFor="let event of events"
+<mat-nav-list>
+  <a mat-list-item *ngFor="let event of events"
       [routerLink]="['/events', event.id]">
     <span class="badge">{{event.id}}</span> {{event.name}}
-  </li>
-</ul>
+  </a>
+</mat-nav-list>
