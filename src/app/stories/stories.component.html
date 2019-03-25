@@ -1,5 +1,5 @@
-<ul>
-  <li *ngFor="let story of stories" (click)="showStory(story)">
-    {{story.name | uppercase}}
+<ul class="events">
+  <li *ngFor="let story of stories" [routerLink]="['/events', eventId, 'stories', story.id]">
+    <span class="badge">{{story.id}}</span> {{story.name}}
   </li>
 </ul>

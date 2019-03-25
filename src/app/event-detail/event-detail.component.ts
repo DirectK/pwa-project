@@ -1,7 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
-import { Event } from '../event';
+import { Component, OnInit } from '@angular/core';
 import { Story } from '../story';
-import { STORIES } from '../mock-stories';
+import { EventService } from '../event.service';
+import { ActivatedRoute } from '@angular/router';
+import { Event } from '../event';
 
 @Component({
   selector: 'app-event-detail',
@@ -10,13 +11,15 @@ import { STORIES } from '../mock-stories';
 })
 export class EventDetailComponent implements OnInit {
 
-  stories = STORIES;
+  stories: Story[]
+  event: Event
 
-  @Input() event: Event;
-
-  constructor() { }
+  constructor(private eventService: EventService, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    this.route.params.subscribe( params => {
+      this.event = this.eventService.getEvent(params.eventId);
+    })
   }
 
 }

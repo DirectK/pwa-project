@@ -11,9 +11,8 @@ import { Story } from '../story';
 })
 export class StoriesComponent implements OnInit {
 
+  eventId: number
   stories: Story[]
-
-  private eventId: number
 
   constructor(private storyService: StoryService, private route: ActivatedRoute) { }
 
@@ -23,9 +22,6 @@ export class StoriesComponent implements OnInit {
     })
     
     this.stories = this.storyService.getStories(this.eventId);
-  }
-
-  showStory(story: Story) {
   }
 
 }

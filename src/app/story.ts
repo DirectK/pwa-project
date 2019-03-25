@@ -1,5 +1,5 @@
 export class Story {
-  eventid: number;
+  eventId: number;
   id: number;
   name: string;
   description: string;
