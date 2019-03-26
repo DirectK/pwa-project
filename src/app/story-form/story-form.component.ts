@@ -8,9 +8,9 @@ import {Story} from "../story";
 })
 export class StoryFormComponent implements OnInit {
 
-  story = new Story(1, 1, "", "", {});
+  story = new Story();
   submitted = false;
-
+  
 
   onSubmit() {this.submitted = true;
     //add model to the event list, increment event id

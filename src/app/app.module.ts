@@ -25,7 +25,8 @@ import { StoryFormComponent } from './story-form/story-form.component';
     StoriesComponent,
     StoryComponent,
     SearchEventsFormComponent,
-    EventFormComponent
+    EventFormComponent,
+    StoryFormComponent
   ],
   imports: [
     BrowserModule,
