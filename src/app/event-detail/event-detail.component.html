@@ -1,9 +1,4 @@
 <div *ngIf="event">
-  <h2>{{event.name}}</h2>
-
-  <div *ngFor="let story of stories">
-    <div *ngIf="story.eventid === event.id">
-      <app-story [story]="story"></app-story>
-    </div>
-  </div>
+  <h2><b>Event: </b>{{event.name}}</h2>
+  <app-stories></app-stories>
 </div>

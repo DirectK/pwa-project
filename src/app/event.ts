@@ -5,4 +5,7 @@ export class Event {
         public id : number,
     ) {}
     //date, keywords, and location
+    constructor() {
+        this.name = "";
+    }
 }

@@ -12,6 +12,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from  '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventFormComponent } from './event-form/event-form.component';
+import { MaterialModule } from './material.module';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { EventFormComponent } from './event-form/event-form.component';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule
   ],
   providers: [],
   bootstrap: [AppComponent]

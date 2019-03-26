@@ -11,21 +11,16 @@ import { Story } from '../story';
 })
 export class StoriesComponent implements OnInit {
 
+  eventId: number
   stories: Story[]
-
-  private eventId: number
 
   constructor(private storyService: StoryService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe( params => {
-      this.eventId = params.eventId;
-    })
-    
-    this.stories = this.storyService.getStories(this.eventId);
-  }
-
-  showStory(story: Story) {
+    this.route.params.subscribe( async params => {
+      this.eventId = parseInt(params.eventId);
+      this.stories = await this.storyService.getStories(this.eventId);
+    });
   }
 
 }

@@ -1,21 +1,21 @@
 import { Injectable } from '@angular/core';
-import { Story } from './story';
+import { IdbService } from './idb.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StoryService {
 
-  stories: Story[] = [
-    {eventid:1, id: 1, name: 'cat' , description:'lame', images: null},
-    {eventid:2, id: 2, name: 'dog' , description:'lame', images: null},
-    {eventid:3, id: 3, name: 'shit' , description:'lame', images: null},
-  ] 
+  constructor(private idbService: IdbService) { }
 
-  constructor() { }
+  async getStory(storyId: number) {
+    let idb = await this.idbService.getIdb();
+    return idb.get("stories", storyId);
+  }
 
-  getStories(eventId: number) {
-    return this.stories;
+  async getStories(eventId: number) {
+    let idb = await this.idbService.getIdb();
+    return idb.getAllFromIndex("stories", "eventId", eventId);
   }
 
 }
