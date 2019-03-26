@@ -31,10 +31,11 @@ export class IdbService {
     deleteDB('pwa-idb');
     this.idbPromise = openDB('pwa-idb', 1, {
       upgrade(idb) {
-        if (!idb.objectStoreNames.contains("events")) {
+        let storeNames = Array.from(idb.objectStoreNames);
+        if (!storeNames.includes("events")) {
           idb.createObjectStore('events', { keyPath: 'id', autoIncrement: true });
         }
-        if (!idb.objectStoreNames.contains("stories")) {
+        if (!storeNames.includes("stories")) {
           let os = idb.createObjectStore('stories', { keyPath: 'id', autoIncrement: true });
           os.createIndex('eventId', 'eventId', { unique: false });
         }
