@@ -17,11 +17,10 @@ export class StoriesComponent implements OnInit {
   constructor(private storyService: StoryService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe( params => {
-      this.eventId = params.eventId;
-    })
-    
-    this.stories = this.storyService.getStories(this.eventId);
+    this.route.params.subscribe( async params => {
+      this.eventId = parseInt(params.eventId);
+      this.stories = await this.storyService.getStories(this.eventId);
+    });
   }
 
 }

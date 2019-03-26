@@ -14,12 +14,8 @@ export class EventComponent implements OnInit {
 
   constructor(private eventService: EventService) { }
 
-  ngOnInit() {
-    this.events = this.eventService.getEvents();
-  }
-
-  onSelect(event: Event): void {
-    this.selectedEvent = event;
+  async ngOnInit() {
+    this.events = await this.eventService.getEvents();
   }
 
 }

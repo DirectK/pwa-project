@@ -1,25 +1,21 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Event } from './event';
+import { IdbService } from './idb.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  events: Event[] = [
-    { id: 1, name: 'Thundercat' },
-    { id: 2, name: 'Mac Miller' },
-    { id: 3, name: 'Some shitty rave who knows' },
-  ];
+  constructor(private idbService: IdbService) { }
 
-  constructor() { }
-
-  getEvents() {
-    return this.events;
+  async getEvents() {
+    let idb = await this.idbService.getIdb();
+    return idb.getAll("events");
   }
 
-  getEvent(eventId: number) {
-    return this.events.find((event) => { return event.id == eventId });
+  getEvent(eventId) {
+    return this.idbService.getIdb().then(idb => idb.get("events", eventId));
   } 
 
 }

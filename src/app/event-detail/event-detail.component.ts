@@ -17,9 +17,9 @@ export class EventDetailComponent implements OnInit {
   constructor(private eventService: EventService, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe( params => {
-      this.event = this.eventService.getEvent(params.eventId);
-    })
+    this.route.params.subscribe( async params => {
+      this.event = await this.eventService.getEvent(parseInt(params.eventId));
+    });
   }
 
 }
