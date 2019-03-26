@@ -8,7 +8,7 @@ import {Event} from "../event";
 })
 export class EventFormComponent implements OnInit {
 
-  event = new Event("v", 1);
+  event = new Event();
 
   submitted = false;
 
