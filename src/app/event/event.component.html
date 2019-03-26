@@ -1,5 +1,6 @@
 <h2>EVENTS</h2>
 
+<app-search-events-form></app-search-events-form>
 <mat-nav-list>
   <a mat-list-item *ngFor="let event of events"
       [routerLink]="['/events', event.id]">

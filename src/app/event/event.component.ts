@@ -8,7 +8,7 @@ import { EventService } from '../event.service';
   styleUrls: ['./event.component.css']
 })
 export class EventComponent implements OnInit {
-
+  
   events: Event[]
   selectedEvent: Event
 

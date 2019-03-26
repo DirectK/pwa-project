@@ -6,6 +6,7 @@ import { EventComponent } from './event/event.component';
 import { EventDetailComponent } from './event-detail/event-detail.component';
 import { ShowListButtonComponent } from './show-list-button/show-list-button.component';
 import { StoriesComponent } from './stories/stories.component';
+import { SearchEventsFormComponent } from './search-events-form/search-events-form.component';
 import { StoryComponent } from './story/story.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from  '@angular/common/http';
@@ -19,7 +20,8 @@ import { MaterialModule } from './material.module';
     EventDetailComponent,
     ShowListButtonComponent,
     StoriesComponent,
-    StoryComponent
+    StoryComponent,
+    SearchEventsFormComponent
   ],
   imports: [
     BrowserModule,
