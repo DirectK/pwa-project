@@ -13,6 +13,7 @@ import { HttpClientModule } from  '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventFormComponent } from './event-form/event-form.component';
 import { MaterialModule } from './material.module';
+import { StoryFormComponent } from './story-form/story-form.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { MaterialModule } from './material.module';
     ShowListButtonComponent,
     StoriesComponent,
     StoryComponent,
-    EventFormComponent
+    EventFormComponent,
+    StoryFormComponent
   ],
   imports: [
     BrowserModule,
