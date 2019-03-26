@@ -9,6 +9,21 @@
       #name="ngModel">
       <div [hidden]="name.valid || name.pristine"
        class="alert alert-danger">Name required</div>
+       
+      <label for="Description">Description</label>
+      <input type="text" class="form-control" id="description" required
+      [(ngModel)]="event.description" name="description"
+      #description="ngModel">
+
+      <label for="Description">Location (Google Maps API)</label>
+      <input type="text" class="form-control" id="description" required
+      [(ngModel)]="event.description" name="description"
+      #description="ngModel">
+
+      <label for="Description">Key Words (comma seperated?)</label>
+      <input type="text" class="form-control" id="keys" required
+      [(ngModel)]="event.keywords" name="keywords"
+      #keywords="ngModel">
     </div>
     <button type="submit" class="btn btn-success" 
     [disabled]="!eventForm.form.valid">Submit</button>

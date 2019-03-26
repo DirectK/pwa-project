@@ -15,6 +15,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EventFormComponent } from './event-form/event-form.component';
 import { MaterialModule } from './material.module';
 import { StoryFormComponent } from './story-form/story-form.component';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import { StoryFormComponent } from './story-form/story-form.component';
     StoriesComponent,
     StoryComponent,
     SearchEventsFormComponent,
-    EventFormComponent
+    EventFormComponent,
+    StoryFormComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

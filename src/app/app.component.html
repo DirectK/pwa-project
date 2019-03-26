@@ -1,12 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-    <h1>{{title}}gg</h1>
-  <app-event></app-event>
-
 <mat-toolbar color="primary">
   <mat-toolbar-row>
     <span>{{title}}</span>
     <button class="event-button" mat-flat-button color="primary" [routerLink]="['/']">Events</button>
+    <button class="event-button" mat-flat-button color="primary" [routerLink]="['/']">Add New Event</button>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-card>
@@ -14,3 +11,5 @@
 </mat-card>
 
 <app-event-form></app-event-form>
+<app-map></app-map>
+<app-story-form></app-story-form>

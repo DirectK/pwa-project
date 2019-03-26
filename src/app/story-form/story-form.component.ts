@@ -6,9 +6,10 @@ import {Story} from "../story";
   templateUrl: './story-form.component.html',
   styleUrls: ['./story-form.component.css']
 })
+
 export class StoryFormComponent implements OnInit {
 
-  story = new Story(1, 1, "", "", {});
+  story = new Story(1, 1, "DAMN", "LAME", {});
   submitted = false;
 
 
@@ -16,8 +17,8 @@ export class StoryFormComponent implements OnInit {
     //add model to the event list, increment event id
     }
   
-    // TODO: Remove this when we're done
-    get diagnostic() { return JSON.stringify(this.story); }
+  // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.story); }
 
   constructor() { }
 
