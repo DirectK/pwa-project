@@ -1,5 +1,8 @@
 export class Event {
-    name: string;
-    id : number;
+
+    constructor(
+        public name: string,
+        public id : number,
+    ) {}
     //date, keywords, and location
 }
