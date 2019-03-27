@@ -6,10 +6,11 @@
     <button class="event-button" mat-flat-button color="primary" [routerLink]="['/']">Add New Event</button>
   </mat-toolbar-row>
 </mat-toolbar>
-<mat-card>
+<div class="container">
   <router-outlet></router-outlet>
 </mat-card>
 
 <app-event-form></app-event-form>
 <app-story-form></app-story-form>
 <app-map></app-map>
+</div>

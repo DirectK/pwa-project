@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Story} from "../story";
+import { StoryService } from '../story.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-story-form',
@@ -9,20 +11,23 @@ import {Story} from "../story";
 
 export class StoryFormComponent implements OnInit {
 
-  story = new Story(1, 1, "DAMN", "LAME", {});
+  story = new Story();
   submitted = false;
 
-
-  onSubmit() {this.submitted = true;
-    //add model to the event list, increment event id
-    }
+  constructor(private route: ActivatedRoute, private storyService: StoryService) { }
   
-  // TODO: Remove this when we're done
-  get diagnostic() { return JSON.stringify(this.story); }
-
-  constructor() { }
-
   ngOnInit() {
   }
+
+  onSubmit() {
+    this.submitted = true;
+    this.route.params.subscribe((params) => {
+      this.story.eventId = parseInt(params.eventId);
+      this.storyService.addStory(this.story);
+    })
+  }
+
+  // TODO: Remove this when we're done
+  get diagnostic() { return JSON.stringify(this.story); }
 
 }
