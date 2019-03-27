@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-declare var google: any;
+/// <reference types="@types/googlemaps" />
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-map',
@@ -9,8 +9,8 @@ declare var google: any;
 
 export class MapComponent implements OnInit {
 
-  map;
-
+  @ViewChild('gmap') gmapElement: any;
+  map: google.maps.Map;
   constructor() { }
 
   ngOnInit() {
@@ -19,7 +19,7 @@ export class MapComponent implements OnInit {
   initMap() {
     alert('MAP')
     this.map = new google.maps.Map(document.getElementById('map'), {
-      center: {lat: -34.397, lng: 150.644},
+      center: new google.maps.LatLng(39.305, -76.617),
       zoom: 8
     });
   }

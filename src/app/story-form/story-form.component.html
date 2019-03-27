@@ -1,4 +1,3 @@
-{{diagnostic}}
 <div class="container">
   <h1>Add Story to Event: </h1>
   <form (ngSubmit)="onSubmit()" #storyForm="ngForm">
@@ -8,7 +7,7 @@
       <!--    
       <select ng-options="event.name for event in events">
       </select>-->
-
+      <br/>
       <label for="Name">Name</label>
       <input type="text" class="form-control" id="name" required
       [(ngModel)]="story.name" name="name"
@@ -25,14 +24,7 @@
       </div>
       
       <label for="images">Images</label>
-      <!--
-      <input type="text" class="form-control" id="images" required
-      [(ngModel)]="story.images" name="images"
-      #name="ngModel">
-      <div [hidden]="name.valid || name.pristine"
-        class="alert alert-danger">Name required
-      </div>-->
-
+      <input type="image" class="form-control" id="images" name="images">
     </div>
     <button type="submit" class="btn btn-success" 
     [disabled]="!storyForm.form.valid">Submit</button>
