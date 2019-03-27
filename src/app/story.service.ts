@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { IdbService } from './idb.service';
+import { Story } from './story';
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,11 @@ export class StoryService {
   async getStories(eventId: number) {
     let idb = await this.idbService.getIdb();
     return idb.getAllFromIndex("stories", "eventId", eventId);
+  }
+
+  async addStory(story: Story) {
+    const idb = await this.idbService.getIdb();
+    return idb.add("stories", story)
   }
 
 }

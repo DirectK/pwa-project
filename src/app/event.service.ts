@@ -10,12 +10,18 @@ export class EventService {
   constructor(private idbService: IdbService) { }
 
   async getEvents() {
-    let idb = await this.idbService.getIdb();
+    const idb = await this.idbService.getIdb();
     return idb.getAll("events");
   }
 
-  getEvent(eventId) {
-    return this.idbService.getIdb().then(idb => idb.get("events", eventId));
-  } 
+  async getEvent(eventId) {
+    const idb = await this.idbService.getIdb();
+    return idb.get("events", eventId);
+  }
+
+  async addEvent(event: Event) {
+    const idb = await this.idbService.getIdb();
+    return idb.add("events", event)
+  }
 
 }

@@ -9,12 +9,12 @@ import { ShowListButtonComponent } from './show-list-button/show-list-button.com
 import { StoriesComponent } from './stories/stories.component';
 import { SearchEventsFormComponent } from './search-events-form/search-events-form.component';
 import { StoryComponent } from './story/story.component';
+import { EventFormComponent } from './event-form/event-form.component';
+import { StoryFormComponent } from './story-form/story-form.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from  '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { EventFormComponent } from './event-form/event-form.component';
 import { MaterialModule } from './material.module';
-import { StoryFormComponent } from './story-form/story-form.component';
 
 @NgModule({
   declarations: [
