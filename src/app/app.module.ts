@@ -15,6 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from  '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
+import { MapComponent } from './map/map.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { MaterialModule } from './material.module';
     StoryComponent,
     SearchEventsFormComponent,
     EventFormComponent,
-    StoryFormComponent
+    StoryFormComponent,
+    MapComponent
   ],
   imports: [
     BrowserModule,

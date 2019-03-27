@@ -8,13 +8,14 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './story-form.component.html',
   styleUrls: ['./story-form.component.css']
 })
+
 export class StoryFormComponent implements OnInit {
 
   story = new Story();
   submitted = false;
 
   constructor(private route: ActivatedRoute, private storyService: StoryService) { }
-
+  
   ngOnInit() {
   }
 
