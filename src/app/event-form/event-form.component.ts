@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from "../event";
 import { EventService } from '../event.service';
 import { Router } from '@angular/router';
-import { EventComponent } from '../event/event.component';
 
 @Component({
   selector: 'app-event-form',
@@ -19,9 +18,10 @@ export class EventFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
-    this.eventService.addEvent(this.event);
+    const eventId = await this.eventService.addEvent(this.event);
+    this.router.navigateByUrl("/events/" + eventId);
   }
 
   // TODO: Remove this when we're done

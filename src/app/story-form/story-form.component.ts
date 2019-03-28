@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Story} from "../story";
 import { StoryService } from '../story.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-story-form',
@@ -14,16 +14,17 @@ export class StoryFormComponent implements OnInit {
   story = new Story();
   submitted = false;
 
-  constructor(private route: ActivatedRoute, private storyService: StoryService) { }
+  constructor(private router: Router, private route: ActivatedRoute, private storyService: StoryService) { }
   
   ngOnInit() {
   }
 
   onSubmit() {
     this.submitted = true;
-    this.route.params.subscribe((params) => {
+    this.route.params.subscribe(async params => {
       this.story.eventId = parseInt(params.eventId);
-      this.storyService.addStory(this.story);
+      const storyId = await this.storyService.addStory(this.story);
+      this.router.navigateByUrl("/events/" + params.eventId + "/stories/" + storyId);
     })
   }
 

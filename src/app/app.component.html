@@ -1,9 +1,9 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>{{title}}</span>
-    <button class="event-button" mat-flat-button color="primary" [routerLink]="['/']">Events</button>
-    <button class="event-button" mat-flat-button color="primary" [routerLink]="['/']">Add New Event</button>
+    <span class="title">{{title}}</span>
+    <button mat-flat-button color="primary" [routerLink]="['/events']">Events</button>
+    <button mat-flat-button color="primary" [routerLink]="['/events/add']">Add Event</button>
   </mat-toolbar-row>
 </mat-toolbar>
 <div class="container">

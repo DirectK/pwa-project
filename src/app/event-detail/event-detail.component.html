@@ -1,4 +1,6 @@
 <div *ngIf="event">
   <h2><b>Event: </b>{{event.name}}</h2>
   <app-stories></app-stories>
+
+  <button mat-flat-button color="primary" [routerLink]="['/events', event.id, 'stories', 'add']">Add story</button>
 </div>
