@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import {Event} from "../event";
+import { Event } from "../event";
+import { EventService } from '../event.service';
+import { Router } from '@angular/router';
+import { EventComponent } from '../event/event.component';
 
 @Component({
   selector: 'app-event-form',
@@ -9,19 +12,19 @@ import {Event} from "../event";
 export class EventFormComponent implements OnInit {
 
   event = new Event();
-
   submitted = false;
 
-  onSubmit() {this.submitted = true;
-  //add model to the event list, increment event id
+  constructor(private eventService: EventService, private router: Router) { }
+
+  ngOnInit() {
+  }
+
+  onSubmit() {
+    this.submitted = true;
+    this.eventService.addEvent(this.event);
   }
 
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.event); }
-
-  constructor() { }
-
-  ngOnInit() {
-  }
 
 }

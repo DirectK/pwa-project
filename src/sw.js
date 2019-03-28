@@ -1,3 +1,5 @@
+var CACHE_NAME = 'cache-7774';
+
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', function() {
     navigator.serviceWorker.register('/sw.js').then(function(registration) {
@@ -8,35 +10,22 @@ if ('serviceWorker' in navigator) {
   });
 }
 
-var CACHE_NAME = 'my-site-cache-v0';
-var urlsToCache = [
-  '/'
-];
-
 self.addEventListener('install', function (event) {
   event.waitUntil(caches.open(CACHE_NAME).then(function (cache) {
-    console.log('Opened cache');
-    return cache.addAll(urlsToCache);
+    fetch("/urls_to_cache").then(function (response) {
+      return response.json().then(function (urlsToCache) {
+        return cache.addAll(urlsToCache);
+      });
+    })
   }));
 });
 
 self.addEventListener('fetch', function(event) {
-  event.respondWith( caches.match(event.request).then(function (response) {
-    if (response) {
-      return response;
-    }
-    
-    return fetch(event.request.clone()).then(function (response) {
-      if(!response || response.status !== 200 || response.type !== 'basic') {
-        return response;
-      }
-    
-      var responseToCache = response.clone();
-      caches.open(CACHE_NAME).then(function (cache) {
-        cache.put(event.request, responseToCache);
+  event.respondWith( 
+    fetch(event.request).catch(function () {
+      return caches.match(event.request).then(function (response) {
+        return response || caches.match("/");
       });
-      
-      return response;
-    });
-  }));
+    })
+  );
 });

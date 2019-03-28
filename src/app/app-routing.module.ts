@@ -11,7 +11,8 @@ const routes: Routes = [
   { path: 'events', component: EventComponent },
   { path: 'events/:eventId', component: EventDetailComponent },
   { path: 'events/:eventId/stories', component: StoriesComponent },
-  { path: 'events/:eventId/stories/:storyId', component: StoryComponent }
+  { path: 'events/:eventId/stories/:storyId', component: StoryComponent },
+  { path: '**', redirectTo: 'events', pathMatch: 'full' }
 ];
 
 @NgModule({
