@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import {Event} from "../event";
 import * as L from 'leaflet';
 
 
@@ -15,13 +16,14 @@ export class MapComponent implements OnInit {
   lng;
   location;
   fixedMarkers: L.marker[] = [];
+  @Input() events: Event[] = [];
   draggableMarker = L.marker;
 
   constructor() { }
 
   ngOnInit() {
-    this.lat = 50.5; //where map and user marker are initiated
-    this.lng = 30.5;
+    this.lat = 53.381130; //where map and user marker are initiated
+    this.lng = -1.470085;
 
     this.map = L.map('map').setView([this.lat, this.lng], 13);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
@@ -29,10 +31,13 @@ export class MapComponent implements OnInit {
       maxZoom: 18,
       id: 'mapbox.streets',
       accessToken: 'pk.eyJ1IjoiZ2FybW9uYm96aWEiLCJhIjoiY2p0c3NoOWp1MHA2eDRnbnBxYm1hOWQwdyJ9.p6481fF0iYHLy5CQFVLMeA'
-  }).addTo(this.map);
+    }).addTo(this.map);
 
-    this.newFixedMarker(50.5, 30.5, 'FUCK');
-    this.newDraggableMarker(50.52, 30.52);
+    for (let e of this.events) {
+      this.newFixedMarker(e.location[0], e.location[1], e.name);
+    };
+
+    this.newDraggableMarker(53.37, -1.465);
     this.draggableMarker.on('move', this.getDragMarkerLocation());
   }
 

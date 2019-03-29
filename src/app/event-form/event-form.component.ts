@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from "../event";
 import { EventService } from '../event.service';
 import { Router } from '@angular/router';
+import * as L from 'leaflet';
 import { EventComponent } from '../event/event.component';
 
 @Component({

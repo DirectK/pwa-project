@@ -1,3 +1,6 @@
+import * as L from 'leaflet';
+
+
 export class Event {
     id : number;
     name: string;
@@ -5,7 +8,7 @@ export class Event {
     images: object;
     startTime: Date;
     endTime: Date;
-    location: object;
+    location: L.LatLng;
     keywords: string[];
     //date, keywords, and location
     constructor() {
@@ -14,7 +17,7 @@ export class Event {
         this.images = {};
         this.startTime = new Date();
         this.endTime = new Date();
-        this.location = {};
+        this.location = new L.LatLng(50, );
         this.keywords = [];
     }
 }

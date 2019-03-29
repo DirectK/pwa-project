@@ -15,8 +15,8 @@
       #description="ngModel">
 
       <label for="Location">Location</label>
-      <input type="text" class="form-control" id="location" required
-      [(ngModel)]="formMap.location" name="location"
+      <input type="L.LatLng" class="form-control" id="location" required
+      [(ngModel)]="formMap.location" name="location" readonly="true"
       #location="ngModel">
       <app-map #formMap></app-map>
 
