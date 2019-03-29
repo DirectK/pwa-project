@@ -34,15 +34,16 @@ export class MapComponent implements OnInit {
     }).addTo(this.map);
 
     for (let e of this.events) {
-      this.newFixedMarker(e.location[0], e.location[1], e.name);
+      alert(e.location.lat)
+      this.newFixedMarker(e.location, e.name);
     };
 
     this.newDraggableMarker(53.37, -1.465);
     this.draggableMarker.on('move', this.getDragMarkerLocation());
   }
 
-  newFixedMarker(lat, lng, title) {
-    var marker = L.marker([lat, lng], {
+  newFixedMarker(latlng, title) {
+    var marker = L.marker(latlng, {
       title: title,
       alt: title,
       riseOnHover: true,
@@ -65,8 +66,6 @@ export class MapComponent implements OnInit {
 
   getDragMarkerLocation() {
     this.location = this.draggableMarker.getLatLng();
-    this.lat = this.location.lat;
-    this.lng = this.location.lng;
   }
 
 }

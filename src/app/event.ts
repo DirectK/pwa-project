@@ -17,7 +17,7 @@ export class Event {
         this.images = {};
         this.startTime = new Date();
         this.endTime = new Date();
-        this.location = new L.LatLng(50, );
+        this.location = new L.LatLng(50, 50);
         this.keywords = [];
     }
 }
