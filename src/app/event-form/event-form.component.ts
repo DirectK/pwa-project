@@ -27,7 +27,6 @@ export class EventFormComponent implements OnInit {
   }
 
   receiveMessage($event) {
-    alert('recieved')
     this.event.location = $event;
   }
   // TODO: Remove this when we're done
