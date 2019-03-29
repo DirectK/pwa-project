@@ -1,5 +1,9 @@
-<form>
+<form (ngSubmit)="onSubmit()">
   <mat-form-field>
-    <input name="search" matInput placeholder="Search events" value="">
+    <input name="input" [(ngModel)]="input" ngModel matInput placeholder="Search events" value="">
   </mat-form-field>
 </form>
+
+<div class="alert alert-info" [hidden]="eventsFound">
+  No results for "{{lastInput}}"
+</div>

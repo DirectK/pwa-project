@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
+import { openDB, deleteDB, wrap, unwrap, IDBPDatabase } from 'idb/with-async-ittr.js';
 import * as L from 'leaflet';
-import { openDB, deleteDB, wrap, unwrap, IDBPDatabase } from 'idb';
 
 @Injectable({
   providedIn: 'root'
@@ -34,10 +34,11 @@ export class IdbService {
       upgrade(idb) {
         let storeNames = Array.from(idb.objectStoreNames);
         if (!storeNames.includes("events")) {
-          idb.createObjectStore('events', { keyPath: 'id', autoIncrement: true });
+          const os = idb.createObjectStore('events', { keyPath: 'id', autoIncrement: true });
+          os.createIndex('name', 'name', { unique: false });
         }
         if (!storeNames.includes("stories")) {
-          let os = idb.createObjectStore('stories', { keyPath: 'id', autoIncrement: true });
+          const os = idb.createObjectStore('stories', { keyPath: 'id', autoIncrement: true });
           os.createIndex('eventId', 'eventId', { unique: false });
         }
       }
@@ -54,6 +55,18 @@ export class IdbService {
 
   getIdb() {
     return this.idbPromise
+  }
+
+  add(idb, storeName, value) {
+    const db: IDBDatabase = unwrap(idb);
+    const tx = db.transaction(storeName, "readwrite");
+    const store = tx.objectStore(storeName);
+    const request = store.add(value);
+
+    return new Promise((resolve, reject) => {
+      request.onsuccess = (event: {'target'}) => resolve(event.target.result);
+      request.onerror = (event: {'target'}) => reject("error");
+    })
   }
 
 }

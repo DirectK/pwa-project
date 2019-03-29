@@ -21,9 +21,10 @@ export class EventFormComponent implements OnInit {
     this.event.location = new L.LatLng(50, -1);
   }
 
-  onSubmit() {
+  async onSubmit() {
     this.submitted = true;
-    this.eventService.addEvent(this.event);
+    const eventId = await this.eventService.addEvent(this.event);
+    this.router.navigateByUrl("/events/" + eventId);
   }
 
   receiveMessage($event) {
