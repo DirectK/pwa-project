@@ -14,12 +14,14 @@
       [(ngModel)]="event.description" name="description"
       #description="ngModel">
 
-      <label for="Description">Location (Google Maps API)</label>
-      <input type="text" class="form-control" id="description" required
-      [(ngModel)]="event.description" name="description"
-      #description="ngModel">
+      <label for="Location">Location</label>
+      <input type="L.LatLng" class="form-control" id="location" required
+      [(ngModel)]="event.location" name="location" readonly="true" value="formMap.location"
+      #location="ngModel">
+      <app-map-form #formMap (messageEvent)="receiveMessage($event)"
+      ></app-map-form>
 
-      <label for="Description">Key Words (comma seperated?)</label>
+      <label for="Keywords">Key Words (comma seperated?)</label>
       <input type="text" class="form-control" id="keys" required
       [(ngModel)]="event.keywords" name="keywords"
       #keywords="ngModel">
