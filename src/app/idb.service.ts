@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import * as L from 'leaflet';
 import { openDB, deleteDB, wrap, unwrap, IDBPDatabase } from 'idb';
 
 @Injectable({
@@ -9,9 +10,9 @@ export class IdbService {
   private idbPromise: Promise<IDBPDatabase>
 
   events = [
-    { name: 'Thundercat' },
-    { name: 'Mac Miller' },
-    { name: 'Some shitty rave who knows' }
+    { name: 'Thundercat', location: new L.LatLng(53.381150,-1.470085)},
+    { name: 'Mac Miller', location: new L.LatLng(53.381110,-1.470085) },
+    { name: 'Some shitty rave who knows', location: new L.LatLng(53.382130,-1.470085) }
   ];
 
   stories = [

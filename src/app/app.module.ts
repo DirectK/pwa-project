@@ -16,6 +16,7 @@ import { HttpClientModule } from  '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { MapComponent } from './map/map.component';
+import { MapFormComponent } from './map-form/map-form.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { MapComponent } from './map/map.component';
     SearchEventsFormComponent,
     EventFormComponent,
     StoryFormComponent,
-    MapComponent
+    MapComponent,
+    MapFormComponent
   ],
   imports: [
     BrowserModule,

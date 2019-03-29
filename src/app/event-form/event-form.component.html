@@ -16,9 +16,10 @@
 
       <label for="Location">Location</label>
       <input type="L.LatLng" class="form-control" id="location" required
-      [(ngModel)]="formMap.location" name="location" readonly="true"
+      [(ngModel)]="event.location" name="location" readonly="true" value="formMap.location"
       #location="ngModel">
-      <app-map #formMap></app-map>
+      <app-map-form #formMap (messageEvent)="receiveMessage($event)"
+      ></app-map-form>
 
       <label for="Keywords">Key Words (comma seperated?)</label>
       <input type="text" class="form-control" id="keys" required

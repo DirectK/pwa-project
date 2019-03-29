@@ -18,6 +18,7 @@ export class EventFormComponent implements OnInit {
   constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
+    this.event.location = new L.LatLng(50, -1);
   }
 
   onSubmit() {
@@ -25,6 +26,10 @@ export class EventFormComponent implements OnInit {
     this.eventService.addEvent(this.event);
   }
 
+  receiveMessage($event) {
+    alert('recieved')
+    this.event.location = $event;
+  }
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.event); }
 
