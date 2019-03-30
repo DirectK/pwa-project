@@ -1,8 +1,6 @@
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { Event } from './event';
 import { IdbService } from './idb.service';
-
-import { unwrap, IDBPDatabase } from 'idb'
 
 @Injectable({
   providedIn: 'root'

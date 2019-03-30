@@ -1,9 +1,15 @@
 <h2>EVENTS</h2>
 
 <app-search-events-form></app-search-events-form>
-<mat-nav-list *ngIf="events">
-  <a mat-list-item *ngFor="let event of events"
-      [routerLink]="['/events', event.id]">
-    <span class="badge">{{event.id}}</span> {{event.name}}
-  </a>
-</mat-nav-list>
+<div *ngIf="events">
+  <div class="card mb-3" *ngFor="let event of events" [routerLink]="['/events', event.id]">
+    <div class="card-img-top">
+      <img class="event-img" src="assets/no_image.gif" alt="Card image cap">
+    </div>
+    <div class="card-body">
+      <h5 class="card-title">{{event.name}}</h5>
+      <p class="card-text">{{event.description}}</p>
+      <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+    </div>
+  </div>
+</div>
