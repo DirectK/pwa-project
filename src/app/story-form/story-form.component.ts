@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {Story} from "../story";
+import { Story } from "../story";
 import { StoryService } from '../story.service';
 import { ActivatedRoute, Router } from '@angular/router';
 

@@ -3,11 +3,6 @@
   <form (ngSubmit)="onSubmit()" #storyForm="ngForm">
     <div class="form-group">
 
-      <label for="event">Event</label>
-      <!--    
-      <select ng-options="event.name for event in events">
-      </select>-->
-      <br/>
       <label for="Name">Name</label>
       <input type="text" class="form-control" id="name" required
       [(ngModel)]="story.name" name="name"

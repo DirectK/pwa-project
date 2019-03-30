@@ -1,3 +1,9 @@
 <div *ngIf="story">
-  <p>hi {{story.name}}</p>
+  <h1>{{story.name}}</h1>
 </div>
+
+<p *ngFor="let comment of comments">
+  {{comment.text}}
+</p>
+
+<app-comment-form></app-comment-form>

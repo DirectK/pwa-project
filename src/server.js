@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const fs = require('fs')
 const port = 3000
+const bodyParser = require('body-parser')
 
 const urlsToCache = [
   '/',
@@ -16,6 +17,11 @@ app.use(express.static('pwa-project'))
 
 app.get('/urls_to_cache', (req, res) => {
   res.send(urlsToCache)
+})
+
+app.post('/login', function(req, res, next) { 
+  var username = req.body.username;
+  var pw = req.body.pw; 
 })
 
 app.get('*', (req, res) => {

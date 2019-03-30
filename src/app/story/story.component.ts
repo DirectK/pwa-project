@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Story } from '../story';
+import { Comment } from '../comment';
 import { ActivatedRoute } from '@angular/router';
 import { StoryService } from '../story.service';
 
@@ -11,6 +12,7 @@ import { StoryService } from '../story.service';
 export class StoryComponent implements OnInit {
 
   story: Story
+  comments: Comment[] = [{storyid:1, text: "YERRRR"}];
 
   constructor(private route: ActivatedRoute, private storyService: StoryService) { }
 
