@@ -1,6 +1,7 @@
-<h2>EVENTS</h2>
+<h2>EVENTS</h2> 
 
 <app-search-events-form></app-search-events-form>
+
 <app-map [events]=events></app-map>
 <mat-nav-list *ngIf="events">
   <a mat-list-item *ngFor="let event of events"

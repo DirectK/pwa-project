@@ -37,8 +37,6 @@ export class MapFormComponent implements OnInit {
     };
 
     this.newDraggableMarker(53.37, -1.465);
-
-  
   }
 
   newFixedMarker(latlng, title) {
@@ -47,6 +45,7 @@ export class MapFormComponent implements OnInit {
       alt: title,
       riseOnHover: true,
     }).addTo(this.map);
+
 
     this.fixedMarkers.push(marker);
   }
@@ -58,12 +57,12 @@ export class MapFormComponent implements OnInit {
       riseOnHover: true,
       draggable: true
     }).addTo(this.map);
-    marker.on('click', this.getDragMarkerLocation())
+    marker.on('dragend', (event) => this.getDragMarkerLocation(event));
     this.draggableMarker = marker;
 
   }
 
-  getDragMarkerLocation() {
+  getDragMarkerLocation(event) {
     this.messageEvent.emit(this.draggableMarker.getLatLng());
   }
 
