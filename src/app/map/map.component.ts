@@ -25,7 +25,9 @@ export class MapComponent implements OnInit {
   constructor(private eventService: EventService, private router: Router) { }
 
   async ngOnInit() {
-    this.events = await this.eventService.getEvents();
+    if (this.events == null){
+      this.events = await this.eventService.getEvents();
+    }
     this.lat = 53.381130; //where map and user marker are initiated
     this.lng = -1.470085;
 
@@ -40,7 +42,6 @@ export class MapComponent implements OnInit {
     for (let e of this.events) {
       this.newFixedMarker(e.location, e.name, e.id);
     };
-
   
   }
 

@@ -10,7 +10,7 @@ export class IdbService {
   private idbPromise: Promise<IDBPDatabase>
 
   events = [
-    { name: 'Thundercat', location: new L.LatLng(53.381150,-1.470085)},
+    { name: 'Thundercat', location: new L.LatLng(53.382180,-1.471185)},
     { name: 'Mac Miller', location: new L.LatLng(53.381110,-1.470085) },
     { name: 'Some shitty rave who knows', location: new L.LatLng(53.382130,-1.470085) }
   ];
