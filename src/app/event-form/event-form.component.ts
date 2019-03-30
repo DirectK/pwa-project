@@ -27,6 +27,10 @@ export class EventFormComponent implements OnInit {
     this.router.navigateByUrl("/events/" + eventId);
   }
 
+  handleFileInput(file) {
+    
+  }
+
   receiveMessage($event) {
     this.event.location = $event;
   }
