@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { Event } from "../event";
 import { EventService } from '../event.service';
 import { Router } from '@angular/router';
+import * as L from 'leaflet';
+import { EventComponent } from '../event/event.component';
 
 @Component({
   selector: 'app-event-form',
@@ -16,6 +18,7 @@ export class EventFormComponent implements OnInit {
   constructor(private eventService: EventService, private router: Router) { }
 
   ngOnInit() {
+    this.event.location = new L.LatLng(50, -1);
   }
 
   async onSubmit() {
@@ -24,6 +27,9 @@ export class EventFormComponent implements OnInit {
     this.router.navigateByUrl("/events/" + eventId);
   }
 
+  receiveMessage($event) {
+    this.event.location = $event;
+  }
   // TODO: Remove this when we're done
   get diagnostic() { return JSON.stringify(this.event); }
 
