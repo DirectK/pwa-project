@@ -1,0 +1,1 @@
+start /b npm update & start /b /wait node dist/server.js
