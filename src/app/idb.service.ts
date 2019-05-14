@@ -38,6 +38,7 @@ export class IdbService {
         if (!storeNames.includes("events")) {
           const os = idb.createObjectStore('events', { keyPath: 'id', autoIncrement: true });
           os.createIndex('name', 'name', { unique: false });
+          os.createIndex('sync', 'sync', { unique: true });
           os.createIndex('synced', 'synced', { unique: false });
           os.createIndex('timestamp', 'timestamp', { unique: false });
           newInstance = true;
@@ -45,6 +46,7 @@ export class IdbService {
         if (!storeNames.includes("stories")) {
           const os = idb.createObjectStore('stories', { keyPath: 'id', autoIncrement: true });
           os.createIndex('eventId', 'eventId', { unique: false });
+          os.createIndex('sync', 'sync', { unique: true });
           os.createIndex('synced', 'synced', { unique: false });
           os.createIndex('timestamp', 'timestamp', { unique: false });
         }
@@ -78,6 +80,24 @@ export class IdbService {
         request.onerror = (event: {'target'}) => reject("error");
       })
     })
+  }
+
+  async getLastTimestamp(store) {
+    const idb = await this.getIdb();
+    const cursor = await idb.transaction(store).store.index('timestamp').openCursor(null, 'prev');
+
+    while (cursor) {
+      return cursor.value.timestamp;
+    }
+
+    return 0;
+  }
+
+  async getSyncs(store) {
+    const idb = await this.getIdb();
+    const docs = await idb.transaction(store).store.index('sync').getAll();
+
+    return docs.map(doc => new Object({ sync: doc.sync, updated: doc.updated }) );
   }
 
 }

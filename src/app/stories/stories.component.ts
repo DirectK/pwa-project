@@ -25,7 +25,7 @@ export class StoriesComponent implements OnInit {
     this.route.params.subscribe(params => {
       this.eventId = parseInt(params.eventId);
 
-      this.dbSyncService.syncComplete().then(async () => {
+      this.dbSyncService.sync('stories').then(async () => {
         this.stories = await this.storyService.getStories(this.eventId);
       });
     });

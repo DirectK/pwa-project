@@ -11,6 +11,7 @@ export class Event {
     keywords: string[];
     sync: string;
     timestamp: number;
+    lastUpdated: Date;
     synced: number;
 
     constructor(fields = {}) {
@@ -23,6 +24,7 @@ export class Event {
         this.sync = "";
         this.timestamp = null;
         this.synced = 0;
+        this.lastUpdated = new Date();
 
         Object.assign(this, fields);
     }
