@@ -1,10 +1,8 @@
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema;
-const ObjectId = Schema.ObjectId;
 
 exports.Event = new Schema({
-  id:  ObjectId,
   name: { type: String, default: '' },
   description: { type: String, default: '' },
   images: { type: Object, default: {} },
@@ -17,7 +15,6 @@ exports.Event = new Schema({
 });
 
 exports.Story = new Schema({
-  id: ObjectId,
   eventId: Number,
   name: { type: String, default: '' },
   description: { type: String, default: '' },

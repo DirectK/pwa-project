@@ -10,79 +10,74 @@ export class DBSyncService {
   private socket = io("http://localhost:3000");
   private stores = ['events', 'stories'];
 
-  private syncPromise: Promise<void>; 
+  private syncPromises = {}; 
 
   constructor(private idbService: IdbService) { }
 
-  sync() {
-    if (!navigator.onLine) {
-      this.syncPromise = Promise.resolve();
-      return;
-    }
-
-    this.socket.on('connect', () => {
-      this.downloadContent().then(() => this.uploadContent());
-    });
-    this.syncPromise = new Promise(resolve => {
-      this.socket.on('sync', (data) => {
-        if (data) {
-          if (data.status == 'pending' && this.stores.includes(data.type)) {
-            const store = data.type;
-            const docs = data.value;
-
-            docs.forEach(doc => {
-              this.idbService.add(store, doc);
-            });
-          } else if (data.status == 'complete') {
-            resolve();
-          }
-        }
-      })
-    })
-  }
-
-  syncComplete() {
-    return this.syncPromise;
-  }
-
-  async uploadContent() {
-    const idb = await this.idbService.getIdb();
-
-    this.stores.forEach(async store => {
-      const index = idb.transaction(store).store.index('synced');
-      let entries = [];
-
-      for await (const cursor of index.iterate(0)) {
-        entries.push(cursor.value);
+  async sync(store) {
+    // sync when network available
+    if (navigator.onLine) {
+      if (this.socket.connected) {
+        // perform syncing 
+        await this.downloadContent(store);
+        await this.uploadContent(store);
+        await this.syncPromises[store];
+      } else {
+        // wait for socket connection to establish
+        return new Promise((resolve) => {
+          this.socket.on('connect', async function self() {
+            await this.sync(store);
+            this.socket.removeListener('connect', self);
+  
+            return resolve();
+          }.bind(this));
+        })
       }
-
-      this.socket.emit('new', {
-        type: store,
-        value: entries
-      })
-    });
+    }
   }
 
-  async downloadContent() {
-    this.stores.forEach(async store => {
-      const timestamp = await this.getLastTimestamp(store);
+  async uploadContent(store) {
+    const idb = await this.idbService.getIdb();
+    
+    const index = idb.transaction(store).store.index('synced');
+    let entries = [];
 
-      this.socket.emit('sync', {
-        type: store,
-        timestamp: timestamp
-      })
+    for await (const cursor of index.iterate(0)) {
+      entries.push(cursor.value);
+    }
+
+    const data = { store: store, value: entries }
+    this.socket.emit('new', data, this.updateIndexedDB.bind(this));
+  }
+
+  async downloadContent(store) {
+    const timestamp = await this.idbService.getLastTimestamp(store);
+    const syncs = await this.idbService.getSyncs(store);
+
+    const data = { state: 'download', store: store, timestamp: timestamp, syncs: syncs }
+    this.syncPromises[store] = new Promise<void>(resolve => {
+      this.socket.emit('sync', data, (storedData) => {
+        this.updateIndexedDB(storedData).then(resolve);
+      });
     })
   }
 
-  private async getLastTimestamp(store) {
-    const idb = await this.idbService.getIdb();
-    const cursor = await idb.transaction(store).store.index('timestamp').openCursor(null, 'prev');
+  async updateIndexedDB(data) {
+    if (data) {
+      if (this.stores.includes(data.store)) {
+        const store = data.store;
+        const docs = data.value;
+        
+        let promises = [];
+        docs.forEach(doc => {
+          promises.push(this.idbService.add(store, doc));
+        });
 
-    while (cursor) {
-      return cursor.value.timestamp;
+        await Promise.all(promises);
+      }
     }
-
-    return 0;
   }
+
+
 
 }

@@ -25,7 +25,7 @@ export class EventFormComponent implements OnInit {
     this.submitted = true;
     const eventId = await this.eventService.addEvent(this.event);
     this.router.navigateByUrl("/events/" + eventId);
-    this.dbSyncService.uploadContent();
+    this.dbSyncService.uploadContent('events');
   }
 
   handleFileInput(file) {

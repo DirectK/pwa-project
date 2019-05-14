@@ -13,20 +13,15 @@ const DB_URL = 'mongodb://127.0.0.1:27017/db'
 mongoose.connect(DB_URL, { useNewUrlParser: true }).then(() => {
   // dummy db
   mongoose.connection.db.dropDatabase(function(err, result) { })
-  new Event({ 
-    name: "test",
-    timestamp: new Date().getTime(), 
-    sync: "teasaasdasd" 
-  }).save((err) => { if (err) console.log(err) })
 }).catch((err) => console.log(err))
 
 const collections = { events: Event, stories: Story }
 const syncCollections = ['events', 'stories']
 
 // handle new (or updated) data for mongo db storage
-const handleNewData = (socket, data) => {
-  if (data && syncCollections.includes(data.type)) {
-    const Collection = collections[data.type]
+const handleNewData = (socket, data, callback) => {
+  if (data && syncCollections.includes(data.store)) {
+    const Collection = collections[data.store]
     let ids = []
     let timestamp = new Date().getTime()
 
@@ -49,44 +44,35 @@ const handleNewData = (socket, data) => {
 
         new Collection(entry).save((err) => {
           if (err) { console.log(err); return; }
-
           entry.id = ids[i]
-          socket.emit('sync', {
-            status: 'pending',
-            type: data.type,
-            value: [entry]
-          })
+
+          const storedData = { store: data.store, value: [entry] }
+          callback(storedData)
         })
       }
     })
   }
 }
 
-const handleSync = (socket, data) => {
-  if (data && syncCollections.includes(data.type)) {
+const handleSync = (socket, data, callback) => {
+  if (data && syncCollections.includes(data.store)) {
     const lastTimestamp = data.timestamp
-    const Collection = collections[data.type]
-    let status = 'pending'
+    const Collection = collections[data.store]
 
     Collection.find({ timestamp: { $gt: lastTimestamp }}, (err, docs) => {
       if (err) { console.log(err); return; }
 
-      if (syncCollections.slice(-1)[0] == data.type) {
-        status = 'complete'
+      if (data.state == 'download') {
+        const storedData = { state: 'download', store: data.store, value: docs }
+        callback(storedData)
       }
-
-      socket.emit('sync', {
-        status: status,
-        type: data.type,
-        value: docs
-      })
     })
   }
 }
 
 exports.handleSocketEvent = (event, socket) => {
   switch (event) {
-    case 'new' : return (data) => handleNewData(socket, data)
-    case 'sync': return (data) => handleSync(socket, data)
+    case 'new' : return (data, callback) => handleNewData(socket, data, callback)
+    case 'sync': return (data, callback) => handleSync(socket, data, callback)
   }
 }

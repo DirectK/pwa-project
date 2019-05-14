@@ -31,7 +31,7 @@ export class StoryFormComponent implements OnInit {
       this.story.eventId = parseInt(params.eventId);
       const storyId = await this.storyService.addStory(this.story);
       this.router.navigateByUrl("/events/" + params.eventId + "/stories/" + storyId);
-      this.dbSyncService.uploadContent();
+      this.dbSyncService.uploadContent('stories');
     })
   }
 

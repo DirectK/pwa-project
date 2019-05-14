@@ -16,7 +16,7 @@ export class EventComponent implements OnInit {
   constructor(private eventService: EventService, private dbSyncService: DBSyncService) { }
 
   ngOnInit() {
-    this.dbSyncService.syncComplete().then(async () => {
+    this.dbSyncService.sync('events').then(async () => {
       this.events = await this.eventService.getEvents();
     });
   }
