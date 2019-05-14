@@ -38,8 +38,7 @@ export class EventService {
   }
 
   async addEvent(event: Event) {
-    const idb = await this.idbService.getIdb();
-    return this.idbService.add(idb, "events", event);
+    return this.idbService.add("events", event);
   }
 
 }

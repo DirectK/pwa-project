@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { DBSyncService } from './dbsync.service';
 
 @Component({
   selector: 'app-root',
@@ -8,9 +9,10 @@ import { Component, OnInit } from '@angular/core';
 export class AppComponent implements OnInit {
   title = 'PWA Project';
 
-  constructor() { }
+  constructor(private dbSyncService: DBSyncService) { }
 
   ngOnInit() {
+    this.dbSyncService.sync();
   }
 
 }

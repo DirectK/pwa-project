@@ -20,8 +20,7 @@ export class StoryService {
   }
 
   async addStory(story: Story) {
-    const idb = await this.idbService.getIdb();
-    return this.idbService.add(idb, "stories", story)
+    return this.idbService.add("stories", story)
   }
 
 }
