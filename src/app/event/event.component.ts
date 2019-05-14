@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Event } from '../event';
 import { EventService } from '../event.service';
+import { DBSyncService } from '../dbsync.service';
 
 @Component({
   selector: 'app-event',
@@ -12,10 +13,12 @@ export class EventComponent implements OnInit {
   events: Event[]
   selectedEvent: Event
 
-  constructor(private eventService: EventService) { }
+  constructor(private eventService: EventService, private dbSyncService: DBSyncService) { }
 
-  async ngOnInit() {
-    this.events = await this.eventService.getEvents();
+  ngOnInit() {
+    this.dbSyncService.syncComplete().then(async () => {
+      this.events = await this.eventService.getEvents();
+    });
   }
 
 }
