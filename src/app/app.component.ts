@@ -9,7 +9,7 @@ import { DBSyncService } from './dbsync.service';
 export class AppComponent implements OnInit {
   title = 'PWA Project';
 
-  constructor(private dbSyncService: DBSyncService) { }
+  constructor() { }
 
   ngOnInit() {
   }
