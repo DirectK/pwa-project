@@ -1,13 +1,20 @@
 import { Injectable } from '@angular/core';
 import { Event } from './event';
 import { IdbService } from './idb.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  constructor(private idbService: IdbService) { }
+  events: BehaviorSubject<Event[]>;
+  activeEvent: BehaviorSubject<Event>;
+
+  constructor(private idbService: IdbService) {
+    this.events = new BehaviorSubject(null);
+    this.activeEvent = new BehaviorSubject(null);
+  }
 
   async getEvents(keyword: string = '') {
     const idb = await this.idbService.getIdb();

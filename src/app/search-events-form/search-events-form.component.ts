@@ -13,7 +13,6 @@ export class SearchEventsFormComponent implements OnInit {
 
   constructor(
     private eventService: EventService, 
-    private eventComponent: EventComponent,
     private router: Router,
     private dbSyncService: DBSyncService,
     private route: ActivatedRoute
@@ -51,7 +50,7 @@ export class SearchEventsFormComponent implements OnInit {
     this.eventsFound = !!result.length;
 
     this.lastInput = this.input;
-    this.eventComponent.events = result;
+    this.eventService.events.next(result);
   }
 
 }
