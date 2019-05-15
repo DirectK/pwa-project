@@ -22,3 +22,10 @@ exports.Story = new Schema({
   sync: { type: String, default: '', index: true },
   timestamp: { type: Number, default: 0 }
 });
+
+exports.User = new Schema({
+  id: number,
+  username: string,
+  pw: string,
+  token: string
+})

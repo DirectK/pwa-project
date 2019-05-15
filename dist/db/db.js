@@ -6,6 +6,7 @@ const Schemas = require('./schemas')
 // get mongo models
 const Event = mongoose.model('Event', Schemas.Event)
 const Story = mongoose.model('Story', Schemas.Story)
+const User = mongoose.model('User', Schemas.User)
 
 const DB_URL = 'mongodb://127.0.0.1:27017/db'
 
@@ -15,7 +16,7 @@ mongoose.connect(DB_URL, { useNewUrlParser: true }).then(() => {
   mongoose.connection.db.dropDatabase(function(err, result) { })
 }).catch((err) => console.log(err))
 
-const collections = { events: Event, stories: Story }
+const collections = { events: Event, stories: Story, users: User }
 const syncCollections = ['events', 'stories']
 
 // handle new (or updated) data for mongo db storage
@@ -75,4 +76,14 @@ exports.handleSocketEvent = (event, socket) => {
     case 'new' : return (data, callback) => handleNewData(socket, data, callback)
     case 'sync': return (data, callback) => handleSync(socket, data, callback)
   }
+}
+
+exports.findUser = (username, cb) => {
+    for (var i = 0, len = users.length; i < len; i++) {
+      let user = users[i];
+      if (user.username === username) {
+        return cb(null, user);
+      }
+    }
+    return cb(null, null);
 }
