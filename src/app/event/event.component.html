@@ -1,8 +1,8 @@
 <h2>EVENTS</h2> 
 
 <app-search-events-form></app-search-events-form>
-<div *ngIf="events">
-  <div class="card mb-3" *ngFor="let event of events" [routerLink]="['/events', event.id]">
+<div *ngIf="events.getValue()">
+  <div class="card mb-3" *ngFor="let event of events.getValue()" [routerLink]="['/events', event.id]">
     <div class="card-img-top">
       <img class="event-img" src="assets/no_image.gif" alt="Card image cap">
     </div>
@@ -13,4 +13,4 @@
     </div>
   </div>
 </div>
-<app-map [events]=events></app-map>
+<app-map [events]=events.getValue()></app-map>

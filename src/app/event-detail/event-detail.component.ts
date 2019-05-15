@@ -19,6 +19,8 @@ export class EventDetailComponent implements OnInit {
   ngOnInit() {
     this.route.params.subscribe( async params => {
       this.event = await this.eventService.getEvent(parseInt(params.eventId));
+      this.eventService.events.next(null);
+      this.eventService.activeEvent.next(this.event);
     });
   }
 
