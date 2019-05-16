@@ -4,7 +4,10 @@
 
 <div *ngIf="events.getValue()">
   <div class="alert alert-info" [hidden]="events.getValue().length">
-    No results for "{{searchInput}}"
+    No results for events
+    <span *ngIf="search">with keyword '{{search}}'</span>
+    <span *ngIf="startTime"> starting on '{{startTime}}'</span>
+    <span *ngIf="endTime"> ending on '{{endTime}}'</span>
   </div>
   <div *ngIf="!mapEnabled">
     <div class="card mb-3" *ngFor="let event of events.getValue()" [routerLink]="['/events', event.id]">

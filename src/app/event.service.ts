@@ -16,22 +16,25 @@ export class EventService {
     this.activeEvent = new BehaviorSubject(null);
   }
 
-  async getEvents(keyword: string = '') {
+  async getEvents(input = null) {
     const idb = await this.idbService.getIdb();
     const tx  = idb.transaction("events");
 
     let result = null;
-    if (keyword) {
-      const lowerKeyword = keyword.toLowerCase();
+    if (input) {
+      if (!input.search) input.search = '';
+      const lowerKeyword = input.search.toLowerCase();
       result = [];
 
       for await (const cursor of tx.store) {
         const event = cursor.value;
         const value = event.name;
         if (typeof value === 'string' || value instanceof String) {
-          if (value.toLowerCase().includes(lowerKeyword)) {
-            result.push(event);
-          } 
+          if (!value.toLowerCase().includes(lowerKeyword)) continue;
+          if (input.startTime && new Date(input.startTime) > new Date(event.startTime)) continue;
+          if (input.endTime && new Date(input.endTime) < new Date(event.startTime)) continue;
+
+          result.push(event);
         }
       }
     }

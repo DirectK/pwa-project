@@ -14,7 +14,9 @@ export class EventComponent implements OnInit {
 
   events: BehaviorSubject<Event[]>;
   mapEnabled: boolean;
-  searchInput: string;
+  search: string;
+  startTime: string;
+  endTime: string;
 
   constructor(
     private eventService: EventService,
@@ -31,7 +33,13 @@ export class EventComponent implements OnInit {
       });
     }
     this.route.queryParamMap.subscribe(params => {
-      this.searchInput = params.get('search');
+      this.search = params.get('search');
+
+      const startTime = params.get('startTime');
+      this.startTime = startTime ? new Date(startTime).toDateString() : null;
+
+      const endTime = params.get('endTime');
+      this.endTime = endTime ? new Date(endTime).toDateString() : null;
     })
   }
 
