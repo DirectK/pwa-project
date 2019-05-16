@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { EventService } from '../event.service';
+import { Event } from '../event';
+declare const lightGallery: any;
 
 @Component({
   selector: 'app-event-info',
@@ -7,9 +10,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class EventInfoComponent implements OnInit {
 
-  constructor() { }
+  constructor(private eventService: EventService) { }
+
+  event: Event;
 
   ngOnInit() {
+    this.eventService.activeEvent.subscribe(event => this.event = event);
   }
 
 }

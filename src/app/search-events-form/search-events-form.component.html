@@ -10,7 +10,8 @@
       </div>
       <div class="col-auto">
         <button type="button" mat-mini-fab color="primary" (click)="toggleMap()" style="margin-bottom: 1em;">
-          <mat-icon>location_searching</mat-icon>
+          <mat-icon *ngIf="!this.eventsComponent.mapEnabled">location_searching</mat-icon>
+          <mat-icon *ngIf="this.eventsComponent.mapEnabled">location_disabled</mat-icon>
         </button>
       </div>
     </div>
