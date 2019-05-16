@@ -47,7 +47,6 @@ export class StoryFormComponent implements OnInit {
     let context = 
       this.camCanvas.nativeElement.getContext("2d").drawImage(this.camVid.nativeElement, 0, 0, 320, 249)
       this.imgData = this.camCanvas.nativeElement.toDataURL('image/png')
-      alert(this.imgData)
   }
 
   onSubmit() {
