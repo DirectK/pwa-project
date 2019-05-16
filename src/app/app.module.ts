@@ -17,6 +17,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material.module';
 import { MapComponent } from './map/map.component';
 import { MapFormComponent } from './map-form/map-form.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { EventInfoComponent } from './event-info/event-info.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,8 @@ import { MapFormComponent } from './map-form/map-form.component';
     EventFormComponent,
     StoryFormComponent,
     MapComponent,
-    MapFormComponent
+    MapFormComponent,
+    EventInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,9 @@ import { MapFormComponent } from './map-form/map-form.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

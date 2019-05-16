@@ -15,7 +15,8 @@ export class SearchEventsFormComponent implements OnInit {
     private eventService: EventService, 
     private router: Router,
     private dbSyncService: DBSyncService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private eventsComponent: EventComponent
   ) { }
 
   input: string = '';
@@ -51,6 +52,10 @@ export class SearchEventsFormComponent implements OnInit {
 
     this.lastInput = this.input;
     this.eventService.events.next(result);
+  }
+
+  toggleMap() {
+    this.eventsComponent.mapEnabled = !this.eventsComponent.mapEnabled;
   }
 
 }

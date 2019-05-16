@@ -13,6 +13,8 @@ import { BehaviorSubject } from 'rxjs';
 export class EventComponent implements OnInit {
 
   events: BehaviorSubject<Event[]>;
+  mapEnabled: boolean;
+  searchInput: string;
 
   constructor(
     private eventService: EventService,
@@ -21,12 +23,20 @@ export class EventComponent implements OnInit {
   ) { }
 
   ngOnInit() {
+    this.mapEnabled = false;
     this.events = this.eventService.events;
     if (!this.route.snapshot.queryParams.search) {
       this.dbSyncService.sync('events').then(async () => {
         this.eventService.events.next(await this.eventService.getEvents());
       });
     }
+    this.route.queryParamMap.subscribe(params => {
+      this.searchInput = params.get('search');
+    })
+  }
+
+  toggleMap() {
+    this.mapEnabled = !this.mapEnabled;
   }
 
 }

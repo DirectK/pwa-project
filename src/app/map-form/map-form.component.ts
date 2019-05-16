@@ -36,7 +36,8 @@ export class MapFormComponent implements OnInit {
       this.newFixedMarker(e.location, e.name);
     };
 
-    this.newDraggableMarker(53.37, -1.465);
+    this.newDraggableMarker(this.lat, this.lng);
+    this.messageEvent.emit(new L.latLng(this.lat, this.lng));
   }
 
   newFixedMarker(latlng, title) {

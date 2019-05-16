@@ -1,9 +1,46 @@
-<form (ngSubmit)="onSubmit()">
-  <mat-form-field>
-    <input name="input" [(ngModel)]="input" ngModel matInput placeholder="Search events" value="">
-  </mat-form-field>
+<form (ngSubmit)="onSubmit()" class="row">
+  <div class="col-lg-4">
+    <div class="row align-items-center">
+      <div class="col col-lg-8">
+        <mat-form-field>
+          <mat-label>Search Events</mat-label>
+          <input name="input" [(ngModel)]="input" ngModel matInput value="">
+          <mat-icon matSuffix>search</mat-icon>
+        </mat-form-field>
+      </div>
+      <div class="col-auto">
+        <button type="button" mat-button (click)="toggleMap()" style="margin-bottom: 1em;">
+          <mat-icon>location_searching</mat-icon>
+        </button>
+      </div>
+    </div>
+    
+  </div>
+  <div class="col-lg-8">
+    <div class="row align-items-center justify-content-end">
+      <div class="col col-lg-auto">
+        <mat-form-field>
+          <mat-label>Start time</mat-label>
+          <input matInput [owlDateTime]="dt1" [owlDateTimeTrigger]="dt1">
+          <mat-icon matSuffix>calendar_today</mat-icon>
+        </mat-form-field>
+        <owl-date-time #dt1></owl-date-time>
+      </div>
+      <div class="col-auto" class="d-none d-sm-flex">
+        <mat-icon style="margin-bottom: .5em;" matSuffix>arrow_forward</mat-icon>
+      </div>
+      <div class="col col-lg-auto">
+        <mat-form-field>
+          <mat-label>End time</mat-label>
+          <input matInput [owlDateTime]="dt2" [owlDateTimeTrigger]="dt2">
+          <mat-icon matSuffix>calendar_today</mat-icon>
+        </mat-form-field>
+        <owl-date-time #dt2></owl-date-time>
+      </div>
+      <div class="col-md-auto">
+        <button mat-flat-button color="primary" style="margin-bottom: 1em;">Search</button>
+      </div>
+    </div>
+  </div>
 </form>
 
-<div class="alert alert-info" [hidden]="eventsFound">
-  No results for "{{lastInput}}"
-</div>

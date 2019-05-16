@@ -39,16 +39,20 @@ export class MapComponent implements OnInit {
       id: 'mapbox.streets',
       accessToken: 'pk.eyJ1IjoiZ2FybW9uYm96aWEiLCJhIjoiY2p0c3NoOWp1MHA2eDRnbnBxYm1hOWQwdyJ9.p6481fF0iYHLy5CQFVLMeA'
     }).addTo(this.map);
-
-    this.eventService.activeEvent.subscribe(event => this.populateMap([event]))
+    
+    this.eventService.activeEvent.subscribe(event => this.populateMap(event))
     this.eventService.events.subscribe(events => this.populateMap(events));
   }
 
   populateMap(events) {
     if (events != null) {
       this.fixedMarkers.forEach(marker => this.map.removeLayer(marker));
-      events.forEach(e => this.newFixedMarker(e.location, e.name, e.id));
-    } 
+      if (Array.isArray(events)) {
+        events.forEach(e => this.newFixedMarker(e.location, e.name, e.id));
+      } else {
+        this.newFixedMarker(events.location, events.name, events.id);
+      }
+    }
   }
 
   newFixedMarker(latlng, title, id) {
@@ -69,10 +73,10 @@ export class MapComponent implements OnInit {
     textElem.innerHTML = title;
     container.appendChild(textElem);
 
-    marker.bindPopup(container).openPopup();
+    marker.bindPopup(container); // .openPopup();
 
+    this.map.panTo(latlng);
     this.fixedMarkers.push(marker);
-
   };
 
 

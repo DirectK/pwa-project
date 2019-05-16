@@ -1,16 +1,24 @@
 <h2>EVENTS</h2> 
 
 <app-search-events-form></app-search-events-form>
+
 <div *ngIf="events.getValue()">
-  <div class="card mb-3" *ngFor="let event of events.getValue()" [routerLink]="['/events', event.id]">
-    <div class="card-img-top">
-      <img class="event-img" src="assets/no_image.gif" alt="Card image cap">
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">{{event.name}}</h5>
-      <p class="card-text">{{event.description}}</p>
-      <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
+  <div class="alert alert-info" [hidden]="events.getValue().length">
+    No results for "{{searchInput}}"
+  </div>
+  <div *ngIf="!mapEnabled">
+    <div class="card mb-3" *ngFor="let event of events.getValue()" [routerLink]="['/events', event.id]">
+      <div class="card-img-top">
+        <img class="event-img" src="assets/no_image.gif" alt="Card image cap">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{event.name}}</h5>
+        <p class="card-text">{{event.description}}</p>
+        <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
+      </div>
     </div>
   </div>
+  <div *ngIf="mapEnabled">
+    <app-map [events]=events.getValue()></app-map>
+  </div>
 </div>
-<app-map [events]=events.getValue()></app-map>

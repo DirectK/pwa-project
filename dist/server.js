@@ -4,7 +4,7 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const session = require('express-session')
 const db = require('./db/db')
-const bp = require('body-parser')
+const bodyParser = require('body-parser')
 const passport = require('passport')
 const Strategy = require('passport-local').Strategy;
 
@@ -91,11 +91,11 @@ app.post('/signup', function(req, res) {
   res.json({success: true})
 })
 
-app.post('/login', passport.authenticate('local'), {
+app.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true //user facing err msg
-})
+}))
 
 app.get('/logout',
   function(req, res){

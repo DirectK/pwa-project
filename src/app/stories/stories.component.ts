@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { StoryService } from '../story.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 import { Story } from '../story';
 import { DBSyncService } from '../dbsync.service';
@@ -22,7 +22,7 @@ export class StoriesComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => {
+    this.route.parent.params.subscribe(params => {
       this.eventId = parseInt(params.eventId);
 
       this.dbSyncService.sync('stories').then(async () => {
