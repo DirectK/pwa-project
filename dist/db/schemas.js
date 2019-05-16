@@ -24,8 +24,8 @@ exports.Story = new Schema({
 });
 
 exports.User = new Schema({
-  id: number,
-  username: string,
-  pw: string,
-  token: string
+  id: Number,
+  username: String,
+  pw: String,
+  token: String
 })

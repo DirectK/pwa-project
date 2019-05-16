@@ -4,7 +4,7 @@ const http = require('http').Server(app)
 const io = require('socket.io')(http)
 const session = require('express-session')
 const db = require('./db/db')
-const bp = require('body-parser')
+const bodyParser = require('body-parser')
 const passport = require('passport')
 const Strategy = require('passport-local').Strategy;
 
@@ -18,11 +18,11 @@ const filesToIgnore = [
 ]
 
 passport.use(new Strategy(
-  function(username, pw, cb) {
+  function(username, password, cb) { //cb = callback
     db.findUser(username, function(err, user) {
       if (err) {return cb(err)}
       if (!user) {return cb(null, false)}
-      if (user.pw != pw) {return cb(null, false)}
+      if (user.password != password) {return cb(null, false)}
 
       return cb(null, user)
     })
@@ -75,15 +75,11 @@ app.get('/urls_to_cache', (req, res) => {
   })
 })
 
-// Request handler for Angular. 
-app.get('*', (req, res) => {
-  res.sendFile(__dirname + '/pwa-project/index.html')
-})
 
 app.post('/signup', function(req, res) {
   let newUser = new db.User({ //new mongo user model
     username: req.body.username,
-    pw: req.body.pw
+    password: req.body.password
   })
   newUser.save(function(err){
     
@@ -91,11 +87,13 @@ app.post('/signup', function(req, res) {
   res.json({success: true})
 })
 
-app.post('/login', passport.authenticate('local'), {
+app.post('/login', passport.authenticate('local', {
   successRedirect: '/',
   failureRedirect: '/login',
   failureFlash: true //user facing err msg
-})
+}, (req, res) => {
+  console.log('posted')
+}))
 
 app.get('/logout',
   function(req, res){
@@ -104,5 +102,10 @@ app.get('/logout',
   });
 
 
+
+// Request handler for Angular. 
+app.get('*', (req, res) => {
+  res.sendFile(__dirname + '/pwa-project/index.html')
+})
 
 http.listen(port, () => console.log(`PWA-project app listening on port ${port}!`))
