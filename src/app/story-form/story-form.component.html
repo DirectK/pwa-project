@@ -18,8 +18,9 @@
         class="alert alert-danger">Description required
       </div>
       
-      <label for="images">Images</label>
-      <input type="image" class="form-control" id="images" name="images">
+      Click to take Image!
+      <video autoplay id=camVid #camVid (click)="snap()"></video>
+      <canvas id=camCanvas #camCanvas height=480 width = 320></canvas>
     </div>
     <button type="submit" class="btn btn-success" 
     [disabled]="!storyForm.form.valid">Submit</button>

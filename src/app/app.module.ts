@@ -18,7 +18,6 @@ import { MaterialModule } from './material.module';
 import { MapComponent } from './map/map.component';
 import { MapFormComponent } from './map-form/map-form.component';
 import { LoginComponent } from './login/login.component';
-import { CommentFormComponent } from './comment-form/comment-form.component';
 
 @NgModule({
   declarations: [
@@ -34,7 +33,6 @@ import { CommentFormComponent } from './comment-form/comment-form.component';
     MapComponent,
     MapFormComponent,
     LoginComponent,
-    CommentFormComponent
   ],
   imports: [
     BrowserModule,

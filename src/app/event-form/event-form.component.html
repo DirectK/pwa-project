@@ -26,6 +26,17 @@
       [(ngModel)]="event.keywords" name="keywords"
       #keywords="ngModel">
     </div>
+    <!--
+    <div class="form-group upload">
+      <input type="file"
+              id="file"
+              (change)="handleFileInput($event.target.files)">
+      <button class="btn">Upload a file</button>
+    </div>-->
+    <video autoplay id=camVid #camVid (click)="snap()"></video>
+    <canvas id=camCanvas #camCanvas height=480 width = 320></canvas>
+    <!--
+    <div><button id="snap" (click)="snap()"> Photo</button></div> -->
     <button type="submit" class="btn-success" 
     [disabled]="!eventForm.form.valid">Submit</button>
   </form>
