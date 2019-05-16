@@ -1,0 +1,7 @@
+.mat-form-field {
+  display: block;
+}
+
+.ng-invalid:not(form) {
+  border-left: 0;
+}

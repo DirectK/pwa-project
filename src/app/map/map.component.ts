@@ -3,6 +3,7 @@ import { Router } from "@angular/router";
 import {Event} from "../event";
 import { EventService } from '../event.service';
 import * as L from 'leaflet';
+import { EventComponent } from '../event/event.component';
 
 
 @Component({
@@ -22,15 +23,15 @@ export class MapComponent implements OnInit {
   draggableMarker = L.marker;
   @Output() messageEvent = new EventEmitter<L.latLng>();
 
-  constructor(private eventService: EventService, private router: Router) { }
+  constructor(
+    private eventService: EventService,
+    private router: Router
+  ) { }
 
   async ngOnInit() {
-    if (this.events == null){
-      this.events = await this.eventService.getEvents();
-    }
     this.lat = 53.381130; //where map and user marker are initiated
     this.lng = -1.470085;
-
+    
     this.map = L.map('map').setView([this.lat, this.lng], 13);
     L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}', {
       attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
@@ -38,11 +39,20 @@ export class MapComponent implements OnInit {
       id: 'mapbox.streets',
       accessToken: 'pk.eyJ1IjoiZ2FybW9uYm96aWEiLCJhIjoiY2p0c3NoOWp1MHA2eDRnbnBxYm1hOWQwdyJ9.p6481fF0iYHLy5CQFVLMeA'
     }).addTo(this.map);
+    
+    this.eventService.activeEvent.subscribe(event => this.populateMap(event))
+    this.eventService.events.subscribe(events => this.populateMap(events));
+  }
 
-    for (let e of this.events) {
-      this.newFixedMarker(e.location, e.name, e.id);
-    };
-  
+  populateMap(events) {
+    if (events != null) {
+      this.fixedMarkers.forEach(marker => this.map.removeLayer(marker));
+      if (Array.isArray(events)) {
+        events.forEach(e => this.newFixedMarker(e.location, e.name, e.id));
+      } else {
+        this.newFixedMarker(events.location, events.name, events.id);
+      }
+    }
   }
 
   newFixedMarker(latlng, title, id) {
@@ -63,10 +73,10 @@ export class MapComponent implements OnInit {
     textElem.innerHTML = title;
     container.appendChild(textElem);
 
-    marker.bindPopup(container).openPopup();
+    marker.bindPopup(container); // .openPopup();
 
+    this.map.panTo(latlng);
     this.fixedMarkers.push(marker);
-
   };
 
 

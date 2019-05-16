@@ -13,35 +13,56 @@ export class SearchEventsFormComponent implements OnInit {
 
   constructor(
     private eventService: EventService, 
-    private eventComponent: EventComponent,
     private router: Router,
     private dbSyncService: DBSyncService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private eventsComponent: EventComponent
   ) { }
 
-  input: string = '';
-  lastInput: string;
+  search: string = '';
+  startTime: Date;
+  endTime: Date;
+  lastInput: {
+    search: string,
+    startTime: Date,
+    endTime: Date
+  };
   eventsFound: boolean = true;
 
   ngOnInit() {
-    let search = this.route.snapshot.queryParams.search;
-    if (search) {
-      this.input = search;
-      this.dbSyncService.sync('events').then(() => {
-        this.performSearch(search);
-        search = false;
-      });
-    }
-
+    let syncNeeded = true;
     this.route.queryParamMap.subscribe(async queryParams => {
-      if (!search) this.performSearch(queryParams.get('search'));
+      const input = {
+        search: queryParams.get('search'),
+        startTime: queryParams.get('startTime'),
+        endTime: queryParams.get('endTime')
+      }
+
+      this.search = input.search;
+      if (input.startTime) this.startTime =  new Date(input.startTime);
+      if (input.endTime) this.endTime = new Date(input.endTime);
+
+      if (syncNeeded) {
+        this.dbSyncService.sync('events').then(() => this.performSearch(input));
+        syncNeeded = false;
+      } else {
+        this.performSearch(input);
+      }
     })
   }
 
   async onSubmit() {
-    if (this.input != this.lastInput) {
+    const newSearch = this.search != this.lastInput.search ||
+      this.startTime != this.lastInput.startTime ||
+      this.endTime != this.lastInput.endTime;
+
+    if (newSearch) {
       let queryParams = {};
-      if (this.input.length) queryParams = { search: this.input };
+      queryParams = {
+        search: this.search && this.search.length ? this.search : null,
+        startTime: this.startTime ? this.startTime.toDateString() : null,
+        endTime: this.endTime ? this.endTime.toDateString() : null
+      };
       this.router.navigate([], { queryParams });
     }
   }
@@ -50,8 +71,12 @@ export class SearchEventsFormComponent implements OnInit {
     const result = await this.eventService.getEvents(input);
     this.eventsFound = !!result.length;
 
-    this.lastInput = this.input;
-    this.eventComponent.events = result;
+    this.lastInput = input;
+    this.eventService.events.next(result);
+  }
+
+  toggleMap() {
+    this.eventsComponent.mapEnabled = !this.eventsComponent.mapEnabled;
   }
 
 }

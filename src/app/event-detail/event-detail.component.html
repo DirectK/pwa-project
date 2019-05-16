@@ -1,8 +1,10 @@
 <div *ngIf="event">
   <h2><b>Event: </b>{{event.name}}</h2>
-  <img src={{event.images.img}}>
-  <app-map [events]=[event]></app-map>
-  <app-stories></app-stories>
-  <br/>
-  <button mat-flat-button color="primary" [routerLink]="['/events', event.id, 'stories', 'add']">Add story</button>
+
+  <nav mat-tab-nav-bar>
+    <a mat-tab-link [routerLink]="['/events', event.id]">Info</a>
+    <a mat-tab-link [routerLink]="['stories']">Stories</a>
+  </nav>
+
+  <router-outlet></router-outlet>
 </div>

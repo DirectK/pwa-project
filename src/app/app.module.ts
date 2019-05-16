@@ -18,6 +18,8 @@ import { MaterialModule } from './material.module';
 import { MapComponent } from './map/map.component';
 import { MapFormComponent } from './map-form/map-form.component';
 import { LoginComponent } from './login/login.component';
+import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
+import { EventInfoComponent } from './event-info/event-info.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +35,7 @@ import { LoginComponent } from './login/login.component';
     MapComponent,
     MapFormComponent,
     LoginComponent,
+    EventInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +43,9 @@ import { LoginComponent } from './login/login.component';
     HttpClientModule,
     FormsModule,
     BrowserAnimationsModule,
-    MaterialModule
+    MaterialModule,
+    OwlDateTimeModule,
+    OwlNativeDateTimeModule 
   ],
   providers: [],
   bootstrap: [AppComponent]

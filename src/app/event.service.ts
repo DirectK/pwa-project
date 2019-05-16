@@ -1,30 +1,40 @@
 import { Injectable } from '@angular/core';
 import { Event } from './event';
 import { IdbService } from './idb.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventService {
 
-  constructor(private idbService: IdbService) { }
+  events: BehaviorSubject<Event[]>;
+  activeEvent: BehaviorSubject<Event>;
 
-  async getEvents(keyword: string = '') {
+  constructor(private idbService: IdbService) {
+    this.events = new BehaviorSubject(null);
+    this.activeEvent = new BehaviorSubject(null);
+  }
+
+  async getEvents(input = null) {
     const idb = await this.idbService.getIdb();
     const tx  = idb.transaction("events");
 
     let result = null;
-    if (keyword) {
-      const lowerKeyword = keyword.toLowerCase();
+    if (input) {
+      if (!input.search) input.search = '';
+      const lowerKeyword = input.search.toLowerCase();
       result = [];
 
       for await (const cursor of tx.store) {
         const event = cursor.value;
         const value = event.name;
         if (typeof value === 'string' || value instanceof String) {
-          if (value.toLowerCase().includes(lowerKeyword)) {
-            result.push(event);
-          } 
+          if (!value.toLowerCase().includes(lowerKeyword)) continue;
+          if (input.startTime && new Date(input.startTime) > new Date(event.startTime)) continue;
+          if (input.endTime && new Date(input.endTime) < new Date(event.startTime)) continue;
+
+          result.push(event);
         }
       }
     }

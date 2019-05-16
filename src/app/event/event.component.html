@@ -1,23 +1,27 @@
 <h2>EVENTS</h2> 
 
 <app-search-events-form></app-search-events-form>
-<div *ngIf="events">
-  <div class="card mb-3" *ngFor="let event of events" [routerLink]="['/events', event.id]">
-    <div class="card-img-top">
-      <img class="event-img" src="assets/no_image.gif" alt="Card image cap">
-    </div>
-    <div class="card-body">
-      <h5 class="card-title">{{event.name}}</h5>
-      <p class="card-text">{{event.description}}</p>
-      <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
+
+<div *ngIf="events.getValue()">
+  <div class="alert alert-info" [hidden]="events.getValue().length">
+    No results for events
+    <span *ngIf="search">with keyword '{{search}}'</span>
+    <span *ngIf="startTime"> starting on '{{startTime}}'</span>
+    <span *ngIf="endTime"> ending on '{{endTime}}'</span>
+  </div>
+  <div *ngIf="!mapEnabled">
+    <div class="card mb-3" *ngFor="let event of events.getValue()" [routerLink]="['/events', event.id]">
+      <div class="card-img-top">
+        <img class="event-img" src="assets/no_image.gif" alt="Card image cap">
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">{{event.name}}</h5>
+        <p class="card-text">{{event.description}}</p>
+        <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
+      </div>
     </div>
   </div>
+  <div *ngIf="mapEnabled">
+    <app-map [events]=events.getValue()></app-map>
+  </div>
 </div>
-<app-map [events]=events></app-map>
-<mat-nav-list *ngIf="events">
-  <a mat-list-item *ngFor="let event of events"
-      [routerLink]="['/events', event.id]">
-    <span class="badge">{{event.id}}</span> {{event.name}}
-  </a>
-</mat-nav-list>
-<app-map [events]=events></app-map>
