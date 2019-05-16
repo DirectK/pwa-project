@@ -1,3 +1,9 @@
 <div *ngIf="story">
-  <p>hi {{story.name}}</p>
+  <h1>{{story.name}}</h1>
 </div>
+
+<img src={{story.images.img}}>
+
+<p *ngFor="let comment of comments">
+  {{comment.text}}
+</p>

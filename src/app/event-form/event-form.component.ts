@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Event } from "../event";
 import { EventService } from '../event.service';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
 import { DBSyncService } from '../dbsync.service';
+import { EventComponent } from '../event/event.component';
+import { SELECT_PANEL_INDENT_PADDING_X } from '@angular/material';
 
 @Component({
   selector: 'app-event-form',
@@ -12,8 +14,14 @@ import { DBSyncService } from '../dbsync.service';
 })
 export class EventFormComponent implements OnInit {
 
+  @ViewChild("camVid")
+  public camVid: ElementRef;
+  @ViewChild("camCanvas")
+  public camCanvas: ElementRef;
+
   event = new Event();
   submitted = false;
+  imgData = null;
 
   constructor(private eventService: EventService, private router: Router, private dbSyncService: DBSyncService) { }
 
@@ -22,14 +30,34 @@ export class EventFormComponent implements OnInit {
   }
 
   async onSubmit() {
+    this.snap()
     this.submitted = true;
+    this.event.images = {img: this.imgData}
     const eventId = await this.eventService.addEvent(this.event);
+
     this.router.navigateByUrl("/events/" + eventId);
     this.dbSyncService.uploadContent('events');
   }
 
   handleFileInput(file) {
     
+  }
+  ngAfterViewInit() {
+    var session = {
+      video : true
+    }
+    navigator.mediaDevices.getUserMedia(session)
+      .then(mediaStream => {
+        this.camVid.nativeElement.srcObject = mediaStream;
+        this.camVid.nativeElement.play()
+      })
+  }
+
+  snap() {
+    let context = 
+      this.camCanvas.nativeElement.getContext("2d").drawImage(this.camVid.nativeElement, 0, 0, 320, 249)
+      this.imgData = this.camCanvas.nativeElement.toDataURL('image/png')
+      alert(this.imgData)
   }
 
   receiveMessage($event) {

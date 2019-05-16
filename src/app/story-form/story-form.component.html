@@ -3,11 +3,6 @@
   <form (ngSubmit)="onSubmit()" #storyForm="ngForm">
     <div class="form-group">
 
-      <label for="event">Event</label>
-      <!--    
-      <select ng-options="event.name for event in events">
-      </select>-->
-      <br/>
       <label for="Name">Name</label>
       <input type="text" class="form-control" id="name" required
       [(ngModel)]="story.name" name="name"
@@ -23,8 +18,9 @@
         class="alert alert-danger">Description required
       </div>
       
-      <label for="images">Images</label>
-      <input type="image" class="form-control" id="images" name="images">
+      Click to take Image!
+      <video autoplay id=camVid #camVid (click)="snap()"></video>
+      <canvas id=camCanvas #camCanvas height=480 width = 320></canvas>
     </div>
     <button type="submit" class="btn btn-success" 
     [disabled]="!storyForm.form.valid">Submit</button>

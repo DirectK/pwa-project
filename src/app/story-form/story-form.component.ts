@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import {Story} from "../story";
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Story } from "../story";
 import { StoryService } from '../story.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DBSyncService } from '../dbsync.service';
@@ -12,8 +12,15 @@ import { DBSyncService } from '../dbsync.service';
 
 export class StoryFormComponent implements OnInit {
 
+  @ViewChild("camVid")
+  public camVid: ElementRef;
+  @ViewChild("camCanvas")
+  public camCanvas: ElementRef;
+
+
   story = new Story();
   submitted = false;
+  imgData = null;
 
   constructor(
     private router: Router, 
@@ -25,8 +32,27 @@ export class StoryFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngAfterViewInit() {
+    var session = {
+      video : true
+    }
+    navigator.mediaDevices.getUserMedia(session)
+      .then(mediaStream => {
+        this.camVid.nativeElement.srcObject = mediaStream;
+        this.camVid.nativeElement.play()
+      })
+  }
+
+  snap() {
+    let context = 
+      this.camCanvas.nativeElement.getContext("2d").drawImage(this.camVid.nativeElement, 0, 0, 320, 249)
+      this.imgData = this.camCanvas.nativeElement.toDataURL('image/png')
+      alert(this.imgData)
+  }
+
   onSubmit() {
     this.submitted = true;
+    this.story.images = {img: this.imgData}
     this.route.params.subscribe(async params => {
       this.story.eventId = parseInt(params.eventId);
       const storyId = await this.storyService.addStory(this.story);

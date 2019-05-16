@@ -26,6 +26,10 @@ export class IdbService {
     // new Story({eventId:3, name: 'sth3' , description:'some description', images: null}),
   ] 
 
+  comments = [
+    {storyid:1, text:'SHIT!'}
+  ]
+
   constructor() {
     this.openIdb();
   }
@@ -50,22 +54,27 @@ export class IdbService {
           os.createIndex('synced', 'synced', { unique: false });
           os.createIndex('timestamp', 'timestamp', { unique: false });
         }
+        if (!storeNames.includes("comments")) {
+          const os = idb.createObjectStore('comments', { keyPath: 'id', autoIncrement: true });
+          os.createIndex('storyId', 'storyId', { unique: false });
+        }
       }
     });
     this.idbPromise.then((idb) => {
-      if (newInstance) {
-        this.events.forEach(event => {
-          idb.put("events", event);
-        });
-        this.stories.forEach(story => {
-          idb.put("stories", story);
-        });
-      }
+      this.events.forEach(event => {
+        idb.put("events", event);
+      });
+      this.stories.forEach(story => {
+        idb.put("stories", story);
+      });
+      this.stories.forEach(comment => {
+        idb.put("comments", comment);
+      });
     })
   }
 
   getIdb() {
-    return this.idbPromise
+    return this.idbPromise;
   }
 
   add(storeName, value) {

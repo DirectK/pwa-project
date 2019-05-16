@@ -19,6 +19,7 @@ const routes: Routes = [
   ] },
   { path: 'events/:eventId/stories/add', component: StoryFormComponent },
   { path: 'events/:eventId/stories/:storyId', component: StoryComponent },
+  { path: 'events/:eventId/stories/:storyId/add', component: StoryComponent },
   { path: '**', redirectTo: 'events', pathMatch: 'full' }
 ];
 

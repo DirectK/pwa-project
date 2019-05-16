@@ -1,0 +1,19 @@
+------------- TODO --------------
+
+Search events by date
+
+Fix stories form (images)
+    --- location?
+
+Change LatLng to Address
+
+Annotate events with links to DBPedia ??????????????
+
+Users!
+   --- Add user to event
+
+user comments on shit
+
+DOCUMENT EVERYTHING
+
+write report!
