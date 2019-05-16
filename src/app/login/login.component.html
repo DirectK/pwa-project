@@ -11,4 +11,24 @@
     </div>
     <button type="submit" class="btn btn-primary" (click)="tryLogin()">Login</button>
   </div>
+<p>
+  login works!
+</p>
+<div class="container">
+  <h1>Login:</h1>
+  <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+    <div class="form-group">
+      <label for="Name">Username</label>
+      <input type="text" class="form-control" id="username" required
+      [(ngModel)]="user.username" name="username"
+      #name="ngModel">
+      <label for="Password">Password</label>
+      <input type="password" class="form-control" id="password" required
+      [(ngModel)]="user.password" name="password"
+      #description="ngModel">
+    </div>
+
+    <button type="submit" class="btn-success" 
+    [disabled]="!loginForm.form.valid">Submit</button>
+  </form>
 </div>

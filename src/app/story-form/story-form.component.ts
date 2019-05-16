@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Story } from "../story";
 import { StoryService } from '../story.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { DBSyncService } from '../dbsync.service';
 
 @Component({
   selector: 'app-story-form',
@@ -21,7 +22,12 @@ export class StoryFormComponent implements OnInit {
   submitted = false;
   imgData = null;
 
-  constructor(private router: Router, private route: ActivatedRoute, private storyService: StoryService) { }
+  constructor(
+    private router: Router, 
+    private route: ActivatedRoute, 
+    private storyService: StoryService,
+    private dbSyncService: DBSyncService
+  ) { }
   
   ngOnInit() {
   }
@@ -51,6 +57,7 @@ export class StoryFormComponent implements OnInit {
       this.story.eventId = parseInt(params.eventId);
       const storyId = await this.storyService.addStory(this.story);
       this.router.navigateByUrl("/events/" + params.eventId + "/stories/" + storyId);
+      this.dbSyncService.uploadContent('stories');
     })
   }
 

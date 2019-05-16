@@ -53,10 +53,17 @@ export class MapComponent implements OnInit {
       riseOnHover: true,
     }).addTo(this.map);
 
-    var popContentBad = "<p>"+ title +"</p><a href='/events/" + id + "'> See Event Detail </a>";
-    var popContentGood = "<a [routerLink]= /events" + "> See Event Detail </a>";
+    const container = document.createElement("div");
+    const textElem = document.createElement("a");
+    textElem.setAttribute("href", "#")
+    textElem.onclick = () => {
+      this.router.navigateByUrl("/events/" + id);
+      return false;
+    };
+    textElem.innerHTML = title;
+    container.appendChild(textElem);
 
-    marker.bindPopup(popContentBad).openPopup();
+    marker.bindPopup(container).openPopup();
 
     this.fixedMarkers.push(marker);
 

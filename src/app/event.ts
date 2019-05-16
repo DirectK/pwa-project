@@ -9,13 +9,23 @@ export class Event {
     endTime: Date;
     location: L.LatLng;
     keywords: string[];
-    //date, keywords, and location
-    constructor() {
+    sync: string;
+    timestamp: number;
+    lastUpdated: Date;
+    synced: number;
+
+    constructor(fields = {}) {
         this.name = "";
         this.description = "";
         this.images = {};
         this.startTime = new Date();
         this.endTime = new Date();
         this.keywords = [];
+        this.sync = "";
+        this.timestamp = null;
+        this.synced = 0;
+        this.lastUpdated = new Date();
+
+        Object.assign(this, fields);
     }
 }

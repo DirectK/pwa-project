@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
 import { EventComponent } from '../event/event.component';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DBSyncService } from '../dbsync.service';
 
 @Component({
   selector: 'app-search-events-form',
@@ -9,21 +11,46 @@ import { EventComponent } from '../event/event.component';
 })
 export class SearchEventsFormComponent implements OnInit {
 
-  constructor(private eventService: EventService, private eventComponent: EventComponent) { }
+  constructor(
+    private eventService: EventService, 
+    private eventComponent: EventComponent,
+    private router: Router,
+    private dbSyncService: DBSyncService,
+    private route: ActivatedRoute
+  ) { }
 
-  input: string;
+  input: string = '';
   lastInput: string;
   eventsFound: boolean = true;
 
   ngOnInit() {
+    let search = this.route.snapshot.queryParams.search;
+    if (search) {
+      this.input = search;
+      this.dbSyncService.sync('events').then(() => {
+        this.performSearch(search);
+        search = false;
+      });
+    }
+
+    this.route.queryParamMap.subscribe(async queryParams => {
+      if (!search) this.performSearch(queryParams.get('search'));
+    })
   }
 
   async onSubmit() {
-    this.lastInput = this.input;
+    if (this.input != this.lastInput) {
+      let queryParams = {};
+      if (this.input.length) queryParams = { search: this.input };
+      this.router.navigate([], { queryParams });
+    }
+  }
 
-    const result = await this.eventService.getEvents(this.input);
+  async performSearch(input) {
+    const result = await this.eventService.getEvents(input);
     this.eventsFound = !!result.length;
 
+    this.lastInput = this.input;
     this.eventComponent.events = result;
   }
 

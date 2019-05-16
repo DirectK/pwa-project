@@ -16,7 +16,7 @@ self.addEventListener('install', function (event) {
       return response.json().then(function (urlsToCache) {
         return cache.addAll(urlsToCache);
       });
-    })
+    });
   }));
 });
 
@@ -24,7 +24,7 @@ self.addEventListener('fetch', function(event) {
   event.respondWith( 
     fetch(event.request).catch(function () {
       return caches.match(event.request).then(function (response) {
-        return response || caches.match("/");
+        return response || caches.match("/index.html");
       });
     })
   );

@@ -2,6 +2,8 @@ import {Component} from '@angular/core';
 import {ApiService} from '../api.service';
 import {CustomerService} from '../customer.service';
 import {Router} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { User } from '../user';
 
 @Component({
   selector: 'app-login',
@@ -31,6 +33,23 @@ export class LoginComponent {
         r => {
           alert(r.error.error);
         });
+export class LoginComponent implements OnInit {
+
+  user = new User();
+  submitted = false;
+
+  constructor() { }
+
+  async onSubmit() {
+    fetch('/login', {
+      method: 'POST',
+      body: JSON.stringify(this.user)
+    })
+  }
+
+  ngOnInit() {
+    this.user.username = "butt"
+    this.user.password = "butt"
   }
 
 }
