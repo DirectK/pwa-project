@@ -2,10 +2,26 @@
   <h1>Create New Event</h1>
   <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
     <div class="row">
-      <dir class="col-12 col-lg-5">
+      <dir class="col-12 col-lg-6">
         <mat-form-field>
           <input matInput required name="name" placeholder="Event name"  [(ngModel)]="event.name">
         </mat-form-field>
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <input [owlDateTime]="startTime" [owlDateTimeTrigger]="startTime" matInput name="startTime" required placeholder="Start time" [(ngModel)]="event.startTime">
+              <mat-icon matSuffix>calendar_today</mat-icon>
+              <owl-date-time #startTime></owl-date-time>
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <input [owlDateTime]="endTime" [owlDateTimeTrigger]="endTime" matInput required name="endTime" placeholder="End time" [(ngModel)]="event.endTime">
+              <mat-icon matSuffix>calendar_today</mat-icon>
+              <owl-date-time #endTime></owl-date-time>
+            </mat-form-field>
+          </div>
+        </div>
         <mat-form-field>
           <textarea matInput required name="address1" placeholder="Address" [(ngModel)]="event.address1"></textarea>
         </mat-form-field>
@@ -29,7 +45,7 @@
           <mat-hint>Drag the map pin to select location</mat-hint>
         </mat-form-field>
       </dir>
-      <dir class="col-12 col-lg-7">
+      <dir class="col-12 col-lg-6">
         <app-map-form #formMap (messageEvent)="receiveMessage($event)"></app-map-form>
       </dir>
     </div>

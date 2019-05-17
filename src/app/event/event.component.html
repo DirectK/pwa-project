@@ -21,7 +21,7 @@
       </div>
     </div>
   </div>
-  <div *ngIf="mapEnabled">
+  <div *ngIf="mapEnabled" class="map-container">
     <app-map [events]=events.getValue()></app-map>
   </div>
 </div>

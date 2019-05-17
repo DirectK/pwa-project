@@ -18,8 +18,8 @@ export class Event {
         this.name = "";
         this.description = "";
         this.images = {};
-        this.startTime = new Date();
-        this.endTime = new Date();
+        this.startTime = null;
+        this.endTime = null;
         this.keywords = [];
         this.sync = "";
         this.timestamp = null;
