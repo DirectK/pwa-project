@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { DBSyncService } from './dbsync.service';
 
 @Component({
   selector: 'app-root',

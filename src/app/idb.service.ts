@@ -61,14 +61,15 @@ export class IdbService {
       }
     });
     this.idbPromise.then((idb) => {
-      if (newInstance) {
-        this.events.forEach(event => {
-          idb.put("events", event);
-        });
-        this.stories.forEach(story => {
-          idb.put("stories", story);
-        });
-      }
+      this.events.forEach(event => {
+        idb.put("events", event);
+      });
+      this.stories.forEach(story => {
+        idb.put("stories", story);
+      });
+      this.stories.forEach(comment => {
+        idb.put("comments", comment);
+      });
     })
   }
 

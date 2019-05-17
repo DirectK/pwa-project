@@ -28,6 +28,7 @@
     "hammerjs": "^2.0.8",
     "idb": "^4.0.3",
     "leaflet": "^1.5.1",
+    "lightgallery.js": "^1.1.3",
     "mongodb": "^3.2.4",
     "mongoose": "^5.5.8",
     "ng-pick-datetime": "^7.0.0",

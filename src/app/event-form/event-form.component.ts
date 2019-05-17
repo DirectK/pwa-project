@@ -3,9 +3,9 @@ import { Event } from "../event";
 import { EventService } from '../event.service';
 import { Router } from '@angular/router';
 import * as L from 'leaflet';
+import { DBSyncService } from '../dbsync.service';
 import { EventComponent } from '../event/event.component';
 import { SELECT_PANEL_INDENT_PADDING_X } from '@angular/material';
-import { DBSyncService } from '../dbsync.service';
 
 @Component({
   selector: 'app-event-form',
