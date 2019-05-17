@@ -1,7 +1,7 @@
 <div *ngIf="event">
-  <h2><b>Event: </b>{{event.name}}</h2>
+  <h2>{{event.name}}</h2>
 
-  <nav mat-tab-nav-bar>
+  <nav mat-tab-nav-bar class="mb-3">
     <a mat-tab-link [routerLink]="['/events', event.id]">Info</a>
     <a mat-tab-link [routerLink]="['stories']">Stories</a>
   </nav>

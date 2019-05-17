@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Story } from "../story";
 import { StoryService } from '../story.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -10,7 +10,7 @@ import { DBSyncService } from '../dbsync.service';
   styleUrls: ['./story-form.component.css']
 })
 
-export class StoryFormComponent implements OnInit {
+export class StoryFormComponent implements OnInit, OnDestroy {
 
   @ViewChild("camVid")
   public camVid: ElementRef;
@@ -34,6 +34,10 @@ export class StoryFormComponent implements OnInit {
   ngOnInit() {
   }
 
+  ngOnDestroy() {
+    this.disableCamera();
+  }
+
   onSubmit() {
     this.submitted = true;
     this.story.images = this.images;
@@ -55,6 +59,13 @@ export class StoryFormComponent implements OnInit {
         this.camVid.nativeElement.srcObject = mediaStream;
         this.camVid.nativeElement.play();
       })
+  }
+
+  disableCamera() {
+    this.videoActive = false;
+    if (this.camVid.nativeElement.srcObject) {
+      this.camVid.nativeElement.srcObject.getTracks().forEach(track => track.stop());
+    }
   }
 
   unsnap() {

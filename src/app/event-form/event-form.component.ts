@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef, OnDestroy } from '@angular/core';
 import { Event } from "../event";
 import { EventService } from '../event.service';
 import { Router } from '@angular/router';
@@ -14,7 +14,7 @@ declare const lightGallery: any;
   templateUrl: './event-form.component.html',
   styleUrls: ['./event-form.component.css']
 })
-export class EventFormComponent implements OnInit {
+export class EventFormComponent implements OnInit, OnDestroy {
 
   @ViewChild("camVid")
   public camVid: ElementRef;
@@ -33,6 +33,10 @@ export class EventFormComponent implements OnInit {
 
   ngOnInit() {
     this.event.location = new L.LatLng(50, -1);
+  }
+
+  ngOnDestroy() {
+    this.disableCamera();
   }
 
   async onSubmit() {
@@ -55,6 +59,13 @@ export class EventFormComponent implements OnInit {
         this.camVid.nativeElement.srcObject = mediaStream;
         this.camVid.nativeElement.play();
       })
+  }
+
+  disableCamera() {
+    this.videoActive = false;
+    if (this.camVid.nativeElement.srcObject) {
+      this.camVid.nativeElement.srcObject.getTracks().forEach(track => track.stop());
+    }
   }
 
   unsnap() {

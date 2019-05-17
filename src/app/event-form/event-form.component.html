@@ -41,7 +41,7 @@
     <div class="card">
       <div class="card-body">
         <button mat-button type="button" *ngIf="!videoActive" (click)="enableCamera()">Take picture</button>
-        <button mat-button type="button" *ngIf="videoActive" (click)="videoActive = false" color="warn">Close camera</button>
+        <button mat-button type="button" *ngIf="videoActive" (click)="disableCamera()" color="warn">Close camera</button>
         <button mat-button type="button">Upload image</button>
         <div [hidden]="!videoActive" class="capture-container mt-3">
           <video autoplay id=camVid #camVid (click)="snap()"></video>

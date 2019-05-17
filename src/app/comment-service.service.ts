@@ -17,7 +17,7 @@ export class CommentServiceService {
 
   async addComment(comment: Comment) {
     const idb = await this.idbService.getIdb();
-    return this.idbService.add(idb, "comments", comment)
+    return this.idbService.add("comments", comment)
   }
 
 }
