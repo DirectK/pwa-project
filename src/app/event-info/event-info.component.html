@@ -1,2 +1,5 @@
-<img src={{event.images.img}}>
+<div class="col-auto image-container" *ngFor="let image of event.images">
+  <img src="{{image.dataURL}}" />
+</div>
+
 <app-map></app-map>

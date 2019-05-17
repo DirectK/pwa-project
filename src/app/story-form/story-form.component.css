@@ -1,0 +1,59 @@
+.upload {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+.upload input[type=file] {
+  font-size: 100px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0;
+}
+
+.gallery-image {
+  width: 100%;
+  max-width: 400px;
+  max-height: 400px;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.image-container {
+  position: relative;
+}
+
+.clear-button {
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+mat-form-field {
+  display: block;
+}
+
+.capture-container {
+  position: relative;
+  display: block;
+  width: 100%;
+}
+
+video {
+  position: relative;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+}
+
+button[type="submit"] {
+  margin: 1em 0;
+}

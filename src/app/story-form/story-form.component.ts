@@ -21,6 +21,8 @@ export class StoryFormComponent implements OnInit {
   story = new Story();
   submitted = false;
   imgData = null;
+  videoActive = false;
+  images = [];
 
   constructor(
     private router: Router, 
@@ -32,33 +34,52 @@ export class StoryFormComponent implements OnInit {
   ngOnInit() {
   }
 
-  ngAfterViewInit() {
-    var session = {
-      video : true
-    }
-    navigator.mediaDevices.getUserMedia(session)
-      .then(mediaStream => {
-        this.camVid.nativeElement.srcObject = mediaStream;
-        this.camVid.nativeElement.play()
-      })
-  }
-
-  snap() {
-    let context = 
-      this.camCanvas.nativeElement.getContext("2d").drawImage(this.camVid.nativeElement, 0, 0, 320, 249)
-      this.imgData = this.camCanvas.nativeElement.toDataURL('image/png')
-      alert(this.imgData)
-  }
-
   onSubmit() {
     this.submitted = true;
-    this.story.images = {img: this.imgData}
+    this.story.images = this.images;
     this.route.params.subscribe(async params => {
       this.story.eventId = parseInt(params.eventId);
       const storyId = await this.storyService.addStory(this.story);
       this.router.navigateByUrl("/events/" + params.eventId + "/stories/" + storyId);
       this.dbSyncService.uploadContent('stories');
     })
+  }
+
+  enableCamera() {
+    var session = {
+      video : true
+    }
+    navigator.mediaDevices.getUserMedia(session)
+      .then(mediaStream => {
+        this.videoActive = true;
+        this.camVid.nativeElement.srcObject = mediaStream;
+        this.camVid.nativeElement.play();
+      })
+  }
+
+  unsnap() {
+    this.imgData = null;
+  }
+
+  snap() {
+    const canvas = this.camCanvas.nativeElement;
+    const width = this.camVid.nativeElement.videoWidth;
+    const height = this.camVid.nativeElement.videoHeight;
+
+    canvas.width = width;
+    canvas.height = height;
+    this.camCanvas.nativeElement.getContext("2d").drawImage(this.camVid.nativeElement, 0, 0);
+    this.imgData = this.camCanvas.nativeElement.toDataURL('image/png');
+  }
+
+  saveImage() {
+    this.images.push({ dataURL: this.imgData });
+    this.imgData = null;
+  }
+
+  removeImage(event) {
+    const target = event.target.parentNode.parentNode.parentNode.firstChild;
+    this.images = this.images.filter(image => target.src != image.dataURL);
   }
 
   // TODO: Remove this when we're done

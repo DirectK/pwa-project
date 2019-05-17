@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EventService } from '../event.service';
 import { Event } from '../event';
-declare const lightGallery: any;
 
 @Component({
   selector: 'app-event-info',

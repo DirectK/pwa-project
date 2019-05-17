@@ -1,43 +1,70 @@
 <div class="container">
   <h1>Create New Event</h1>
   <form (ngSubmit)="onSubmit()" #eventForm="ngForm">
-    <div class="form-group">
-      <label for="Name">Event Name</label>
-      <input type="text" class="form-control" id="name" required
-      [(ngModel)]="event.name" name="name"
-      #name="ngModel">
-      <div [hidden]="name.valid || name.pristine"
-       class="alert alert-danger">Name required</div>
-       
-      <label for="Description">Description</label>
-      <input type="text" class="form-control" id="description" required
-      [(ngModel)]="event.description" name="description"
-      #description="ngModel">
-
-      <label for="Location">Location</label>
-      <input type="L.LatLng" class="form-control" id="location" required
-      [(ngModel)]="event.location" name="location" readonly="true" value="formMap.location"
-      #location="ngModel">
-      <app-map-form #formMap (messageEvent)="receiveMessage($event)"
-      ></app-map-form>
-
-      <label for="Keywords">Key Words (comma seperated?)</label>
-      <input type="text" class="form-control" id="keys" required
-      [(ngModel)]="event.keywords" name="keywords"
-      #keywords="ngModel">
+    <div class="row">
+      <dir class="col-12 col-lg-5">
+        <mat-form-field>
+          <input matInput required name="name" placeholder="Event name"  [(ngModel)]="event.name">
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput required name="address1" placeholder="Address" [(ngModel)]="event.address1"></textarea>
+        </mat-form-field>
+        <mat-form-field>
+          <textarea matInput name="address2" placeholder="Address 2" [(ngModel)]="event.address2"></textarea>
+        </mat-form-field>
+        <div class="row">
+          <div class="col">
+            <mat-form-field>
+              <input matInput name="city" required placeholder="City" [(ngModel)]="event.city">
+            </mat-form-field>
+          </div>
+          <div class="col">
+            <mat-form-field>
+              <input matInput required name="postcode" placeholder="Postcode" [(ngModel)]="event.postcode">
+            </mat-form-field>
+          </div>
+        </div>
+        <mat-form-field>
+          <input matInput required readonly name="location" placeholder="Map location" [(ngModel)]="event.location">
+          <mat-hint>Drag the map pin to select location</mat-hint>
+        </mat-form-field>
+      </dir>
+      <dir class="col-12 col-lg-7">
+        <app-map-form #formMap (messageEvent)="receiveMessage($event)"></app-map-form>
+      </dir>
     </div>
-    <!--
-    <div class="form-group upload">
-      <input type="file"
-              id="file"
-              (change)="handleFileInput($event.target.files)">
-      <button class="btn">Upload a file</button>
-    </div>-->
-    <video autoplay id=camVid #camVid (click)="snap()"></video>
-    <canvas id=camCanvas #camCanvas height=480 width = 320></canvas>
-    <!--
-    <div><button id="snap" (click)="snap()"> Photo</button></div> -->
-    <button type="submit" class="btn-success" 
-    [disabled]="!eventForm.form.valid">Submit</button>
+    <mat-form-field appearance="fill">
+      <mat-label>Description</mat-label>
+      <textarea matInput required name="desription" rows="4" [(ngModel)]="event.description"></textarea>
+    </mat-form-field>
+
+    <div class="card">
+      <div class="card-body">
+        <button mat-button type="button" *ngIf="!videoActive" (click)="enableCamera()">Take picture</button>
+        <button mat-button type="button" *ngIf="videoActive" (click)="videoActive = false" color="warn">Close camera</button>
+        <button mat-button type="button">Upload image</button>
+        <div [hidden]="!videoActive" class="capture-container mt-3">
+          <video autoplay id=camVid #camVid (click)="snap()"></video>
+          <canvas [hidden]="!imgData" (click)="unsnap()" id=camCanvas #camCanvas></canvas>
+        </div>
+        <div [hidden]="!videoActive" class="row align-items-center">
+          <div class="col">Click or tap to take a picture, again to discard it.</div>
+          <div class="col-auto">
+            <button [disabled]="!imgData" (click)="saveImage()" type="button" mat-flat-button color="primary">Save</button>
+          </div>
+        </div>
+        <div class="row justify-content-center mt-3">
+          <div class="col-auto image-container" *ngFor="let image of images">
+            <img class="gallery-image" src="{{image.dataURL}}" />
+            <button (click)="removeImage($event)" mat-mini-fab type="button" class="clear-button" color="warn">
+              <mat-icon>clear</mat-icon>
+            </button>
+          </div>
+        </div>
+        <div *ngIf="!images.length" class="alert alert-info mb-0">No image selected</div>
+      </div>
+    </div>
+
+    <button type="submit" mat-flat-button color="primary" [disabled]="!eventForm.form.valid">Submit</button>
   </form>
 </div>
