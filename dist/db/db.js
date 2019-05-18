@@ -2,6 +2,9 @@ const mongoose = require('mongoose')
 var crypto = require('crypto')
 
 const Schemas = require('./schemas')
+const JwtStrategy = require('passport-jwt').Strategy,
+    ExtractJwt = require('passport-jwt').ExtractJwt;
+
 
 // get mongo models
 const Event = mongoose.model('Event', Schemas.Event)
@@ -9,6 +12,16 @@ const Story = mongoose.model('Story', Schemas.Story)
 const User = mongoose.model('User', Schemas.User)
 
 const DB_URL = 'mongodb://127.0.0.1:27017/db'
+
+nUser = new User ({username: 'test', password: 'test'}).save(function(err) {
+  if (err) {
+    console.log('ERROR')
+  } else {
+    console.log('NO ERR in creating new user')
+  }
+})
+
+console.log('nuser: ' + JSON.stringify(nUser))
 
 // connect to mongo database
 mongoose.connect(DB_URL, { useNewUrlParser: true }).then(() => {
@@ -78,12 +91,25 @@ exports.handleSocketEvent = (event, socket) => {
   }
 }
 
-exports.findUser = (username, cb) => {
-    for (var i = 0, len = users.length; i < len; i++) {
-      let user = users[i];
-      if (user.username === username) {
-        return cb(null, user);
-      }
-    }
-    return cb(null, null);
+exports.newUser = (username, password) => {
+  let nUser = new User ({username: username, password: password})
+  nUser.save(function(err) {
+  if (err) {
+    console.log('ERROR')
+  } else {
+    console.log('NO ERR')
+  }
+  console.log(nUser)
+})
+
 }
+
+exports.findUser = (username, cb) => {
+  console.log('find user calleds')
+  User.findOne({username: username}).then(user => {
+    console.log(user)
+    return cb(null, user)
+  });
+}
+
+exports.User = User

@@ -1,28 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import {ApiService} from '../api.service';
-import {CustomerService} from '../customer.service';
-import {Router} from '@angular/router';
 import { User } from '../user';
 import { HttpClient, XhrFactory } from '@angular/common/http';
-import { ɵangular_packages_platform_browser_platform_browser_d } from '@angular/platform-browser';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-signup',
+  templateUrl: './signup.component.html',
+  styleUrls: ['./signup.component.css']
 })
-
-export class LoginComponent implements OnInit {
+export class SignupComponent implements OnInit {
 
   user = new User();
   submitted = false;
   xhr = new XMLHttpRequest
 
-  constructor(private router: Router) { }
+  constructor() { }
 
   async onSubmit() {
-    let route = null;
-    this.xhr.open('POST', 'http://localhost:3000/login', true);
+    this.xhr.open('POST', 'http://localhost:3000/signup', true);
     this.xhr.setRequestHeader('Content-Type', 'application/json')
     let userDetails = {
       username: this.user.username,
@@ -32,8 +26,10 @@ export class LoginComponent implements OnInit {
     console.log(JSON.stringify(userDetails) + ' sent')
 
     this.xhr.onload = function() {
-      let response = JSON.parse(this.response);
-      console.log('response route: ' + response.route);
+      let responseText = this.response;
+      console.log(responseText);
+      console.log('cors recieved')
+      // process the response.
      };
      
      this.xhr.onerror = function() {

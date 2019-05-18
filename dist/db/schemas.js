@@ -26,6 +26,6 @@ exports.Story = new Schema({
 exports.User = new Schema({
   id: Number,
   username: String,
-  pw: String,
+  password: String,
   token: String
 })

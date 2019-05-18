@@ -8,9 +8,13 @@ import { StoryComponent } from './story/story.component';
 import { EventFormComponent } from './event-form/event-form.component';
 import { StoryFormComponent } from './story-form/story-form.component';
 import { EventInfoComponent } from './event-info/event-info.component';
+import { LoginComponent } from './login/login.component';
+import { SignupComponent } from './signup/signup.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'events', pathMatch: 'full' },
+  { path: 'login', component: LoginComponent },
+  { path: 'signup', component: SignupComponent },
   { path: 'events', component: EventComponent },
   { path: 'events/add', component: EventFormComponent },
   { path: 'events/:eventId', component: EventDetailComponent, children: [
