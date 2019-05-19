@@ -23,6 +23,7 @@ export class LoginComponent implements OnInit {
   async onSubmit() {
     this.xhr.open('POST', 'http://localhost:3000/login', true);
     this.xhr.setRequestHeader('Content-Type', 'application/json')
+    this.xhr.withCredentials = true;
     let userDetails = {
       username: this.user.username,
       password: this.user.password
@@ -40,6 +41,8 @@ export class LoginComponent implements OnInit {
 
   route() {
     let res = JSON.parse(this.xhr.response)
+    localStorage.setItem('jwtToken', res.token);
+    localStorage.setItem('username', this.user.username);
     this.router.navigateByUrl(res.route)
   }
 

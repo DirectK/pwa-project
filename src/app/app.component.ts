@@ -7,10 +7,14 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AppComponent implements OnInit {
   title = 'PWA Project';
+  username = localStorage.getItem('username')
 
   constructor() { }
 
-  ngOnInit() {
+  ngOnChanges() {
+    this.username = localStorage.getItem('username')
   }
+
+  ngOnInit() {}
 
 }

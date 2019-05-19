@@ -7,6 +7,7 @@ const session = require('express-session')
 const db = require('./db/db')
 const bodyParser = require('body-parser')
 const passport = require('passport')
+const jwt = require('jsonwebtoken')
 const LocalStrategy = require('passport-local').Strategy;
 
 const fs = require('fs')
@@ -125,22 +126,34 @@ app.get('/urls_to_cache', (req, res) => {
 app.post('/signup', function(req, res) {
   db.findUser(res.username, function(err, user) {
     if (!user) {
-      console.log('user not found')
+      console.log('user not found, signing up...')
       db.newUser(req.body.username, req.body.password)
-      console.log('signing up...')
+      const token = jwt.sign({username: req.body.username}, 'nerd')
+      return res.json({username: req.body.username, token});
     } else {
     console.log('user already exists...')
     }
   })
 })
 
-app.get('/authtest', function(req, res) {
-  res.json({success: true})
+app.post('/authtest', function(req, res) {
+  console.log(req.body.token)
+  const token = req.body.token
+  console.log('token: ' + token)
+  jwt.verify(token, 'nerd', function(err, success) {
+    if (err) {
+      console.log('verify error:' + err)
+      res.status(200).send(err)
+    } else {
+      res.json({success: true})
+    }
+  })
 })
 
-app.post('/login', passport.authenticate('local'), function(req, res) {
+app.post('/login', passport.authenticate('local', {session: false}), function(req, res) {
+  const token = jwt.sign({username: req.body.username}, 'nerd')
   console.log('authentication successful.')
-  res.json({route: '/'})
+  res.json({username: req.body.username, token: token, route: '/'});
 })
 
 app.get('/test', (req, res) => {

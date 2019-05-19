@@ -13,10 +13,15 @@ export class AuthIntermediaryComponent implements OnInit {
   constructor(private router: Router) { }
 
   ngOnInit() {
-    this.xhr.open('GET', 'http://localhost:3000/authtest');
+    this.xhr.open('POST', 'http://localhost:3000/authtest', true);
+    this.xhr.setRequestHeader('Content-Type', 'application/json')
     this.xhr.withCredentials = true;
-    this.xhr.send()
-    console.log('auth test sent')
+    let userDetails = {
+      token: localStorage.getItem('jwtToken'),
+    }
+    this.xhr.send(JSON.stringify(userDetails))
+    console.log('auth test sent w: token' + JSON.stringify(userDetails))
+    console.log()
 
     this.xhr.onload = (event) => this.route()
 
@@ -27,7 +32,7 @@ export class AuthIntermediaryComponent implements OnInit {
 
   route() {
     console.log('auth test recieved')
-    let res = (this.xhr.response)
+    let res = JSON.parse(this.xhr.response)
     console.log(res.success)
     if (res.success) {
       this.router.navigateByUrl('/events/add')
