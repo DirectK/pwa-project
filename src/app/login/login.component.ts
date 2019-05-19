@@ -21,7 +21,6 @@ export class LoginComponent implements OnInit {
   constructor(private router: Router) { }
 
   async onSubmit() {
-    let route = null;
     this.xhr.open('POST', 'http://localhost:3000/login', true);
     this.xhr.setRequestHeader('Content-Type', 'application/json')
     let userDetails = {
@@ -31,14 +30,17 @@ export class LoginComponent implements OnInit {
     this.xhr.send(JSON.stringify(userDetails))
     console.log(JSON.stringify(userDetails) + ' sent')
 
-    this.xhr.onload = function() {
-      let response = JSON.parse(this.response);
-      console.log('response route: ' + response.route);
-     };
-     
+
+    this.xhr.onload = (event) => this.route()
+
      this.xhr.onerror = function() {
        console.log('There was an error!');
      };
+  }
+
+  route() {
+    let res = JSON.parse(this.xhr.response)
+    this.router.navigateByUrl(res.route)
   }
 
   ngOnInit() {

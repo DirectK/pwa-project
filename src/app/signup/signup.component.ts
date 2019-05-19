@@ -18,6 +18,8 @@ export class SignupComponent implements OnInit {
   async onSubmit() {
     this.xhr.open('POST', 'http://localhost:3000/signup', true);
     this.xhr.setRequestHeader('Content-Type', 'application/json')
+    
+    //this.xhr.withCredentials = true;
     let userDetails = {
       username: this.user.username,
       password: this.user.password

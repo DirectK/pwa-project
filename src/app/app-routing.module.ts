@@ -10,9 +10,11 @@ import { StoryFormComponent } from './story-form/story-form.component';
 import { EventInfoComponent } from './event-info/event-info.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { AuthIntermediaryComponent } from './auth-intermediary/auth-intermediary.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'events', pathMatch: 'full' },
+  { path: 'authtest', component: AuthIntermediaryComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'events', component: EventComponent },

@@ -21,6 +21,7 @@ import { OwlDateTimeModule, OwlNativeDateTimeModule } from 'ng-pick-datetime';
 import { EventInfoComponent } from './event-info/event-info.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
+import { AuthIntermediaryComponent } from './auth-intermediary/auth-intermediary.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { SignupComponent } from './signup/signup.component';
     MapFormComponent,
     EventInfoComponent,
     LoginComponent,
-    SignupComponent
+    SignupComponent,
+    AuthIntermediaryComponent
   ],
   imports: [
     BrowserModule,

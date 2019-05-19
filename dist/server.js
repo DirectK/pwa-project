@@ -21,16 +21,29 @@ const filesToIgnore = [
   'assets'
 ]
 
+// set sessions
+app.set('trust proxy', 1)
+app.use(session({
+  key: 'user_sid',
+  secret: 'ZS7b0dwb22KoYwTi9lN5',
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: 'false', expires: 600000 }
+}))
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({'extended':'false'}));
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", "http://localhost:4200");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
      next();
 });
+app.use(cors({
+  credentials: true,
+}));
 
 passport.use(new LocalStrategy(
   function(username, password, cb) { //cb = callback
@@ -55,24 +68,26 @@ passport.use(new LocalStrategy(
 
 passport.serializeUser(function(user, done) {
   console.log('serialzing into session.......')
-  done(null, user._id);
+  console.log(user.username)
+  done(null, user.username);
 });
 
-passport.deserializeUser(function(id, done) {
-  db.User.findById(id, function(err, user) {
-    done(err, user);
-  });
+passport.deserializeUser(function(username, done) {
+  console.log('deserialise called')
+  let user = db.findUser(username, function(err, user) {
+    if (err) {
+      console.log('err' + err)
+      return done(err)
+    }
+    if (!user) {
+      console.log('user not found')
+      return done(null, false)
+    }
+    console.log('user found!')
+    return done(null, user)
+  })
 });
 
-// set sessions
-app.set('trust proxy', 1)
-app.use(session({
-  key: 'user_sid',
-  secret: 'ZS7b0dwb22KoYwTi9lN5',
-  resave: false,
-  saveUninitialized: true,
-  cookie: { secure: 'auto', expires: 600000 }
-}))
 
 // app.use((req, res, next) => {
 //   if (req.cookies.user_sid && !req.session.user) {
@@ -90,7 +105,7 @@ io.on('connection', (socket) => {
 app.use(express.static(__dirname + '/pwa-project'))
 
 // Handler for PWA caching
-app.get('/urls_to_cache', cors(), (req, res) => {
+app.get('/urls_to_cache', (req, res) => {
   const dirPath = __dirname + "/pwa-project/"
   fs.readdir(dirPath, function (err, files) {
     if (err) {
@@ -106,33 +121,32 @@ app.get('/urls_to_cache', cors(), (req, res) => {
 })
 
 
-app.post('/signup', cors(), function(req, res) {
-  db.newUser(req.body.username, req.body.password)
-  console.log('signing up...')
-  /*
-  let newUser = new db.User({ //new mongo user model
-    username: req.body.username,
-    password: req.body.password
-  })
-  newUser.save(function(err){
-    if (err)
-      console.log('Signup Error: '+err)
-    else {
-      res.json({success: true, body: 'yay'})
+app.post('/signup', function(req, res) {
+  db.findUser(res.username, function(err, user) {
+    if (!user) {
+      console.log('user not found')
+      db.newUser(req.body.username, req.body.password)
+      console.log('signing up...')
+    } else {
+    console.log('user already exists...')
     }
-  }) */
+  })
+})
+
+app.get('/authtest', function(req, res) {
+  res.json({success: true})
 })
 
 app.post('/login', passport.authenticate('local'), function(req, res) {
   console.log('authentication successful.')
-  res.json('/')
+  res.json({route: '/'})
 })
 
-app.get('/test', cors(), (req, res) => {
+app.get('/test', (req, res) => {
   res.json('test worked')
 })
 
-app.get('/logout', cors(),
+app.get('/logout',
   function(req, res){
     //req.logout();
     //res.redirect('/');
@@ -142,7 +156,7 @@ app.get('/logout', cors(),
 
 
 // Request handler for Angular. 
-app.get('*', cors(), (req, res) => {
+app.get('*', (req, res) => {
   res.sendFile(__dirname + '/pwa-project/index.html')
 })
 

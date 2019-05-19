@@ -112,4 +112,12 @@ exports.findUser = (username, cb) => {
   });
 }
 
+exports.findUserByID = (id) => {
+  console.log('finding user by id......')
+  User.findById(id).then(user => {
+    console.log('user found by _ID!')
+    return user
+  })
+}
+
 exports.User = User
