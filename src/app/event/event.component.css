@@ -19,3 +19,12 @@
     transform: translate(-50%, -50%);
   }
 }
+
+.map-container {
+  position: relative;
+  height: 500px;
+}
+
+app-map {
+  height: 100%;
+}
