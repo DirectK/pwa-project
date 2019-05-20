@@ -143,7 +143,7 @@ app.post('/authtest', function(req, res) {
   jwt.verify(token, 'nerd', function(err, success) {
     if (err) {
       console.log('verify error:' + err)
-      res.status(200).send(err)
+      res.json({success: false})
     } else {
       res.json({success: true})
     }

@@ -22,6 +22,7 @@ import { EventInfoComponent } from './event-info/event-info.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { AuthIntermediaryComponent } from './auth-intermediary/auth-intermediary.component';
+import { NgxGalleryModule } from 'ngx-gallery';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { AuthIntermediaryComponent } from './auth-intermediary/auth-intermediary
     BrowserAnimationsModule,
     MaterialModule,
     OwlDateTimeModule,
-    OwlNativeDateTimeModule 
+    OwlNativeDateTimeModule,
+    NgxGalleryModule
   ],
   providers: [],
   bootstrap: [AppComponent]

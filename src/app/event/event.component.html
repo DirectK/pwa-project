@@ -12,12 +12,13 @@
   <div *ngIf="!mapEnabled">
     <div class="card mb-3" *ngFor="let event of events.getValue()" [routerLink]="['/events', event.id]">
       <div class="card-img-top">
-        <img class="event-img" src="assets/no_image.gif" alt="Card image cap">
+        <img *ngIf="!event.images.length" class="event-img" src="assets/no_image.gif" alt="Card image cap">
+        <img *ngIf="event.images.length" class="event-img" [src]="event.images[0].dataURL" alt="Card image cap">
       </div>
       <div class="card-body">
         <h5 class="card-title">{{event.name}}</h5>
         <p class="card-text">{{event.description}}</p>
-        <p class="card-text"><small class="text-muted">Last updated x mins ago</small></p>
+        <p class="card-text"><small class="text-muted">Starting on {{event.startTime.toLocaleString()}}</small></p>
       </div>
     </div>
   </div>

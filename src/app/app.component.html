@@ -1,14 +1,13 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <mat-toolbar color="primary">
-  <mat-toolbar-row>
-    <span class="title">{{title}}</span>
-    <button mat-flat-button color="primary" [routerLink]="['/events']">Events</button>
-    <button mat-flat-button color="primary" [routerLink]="['/authtest']">Add Event</button>
-    <button mat-flat-button color="primary" [routerLink]="['/login']">Login</button>
-    <button mat-flat-button color="primary" [routerLink]="['/signup']">Signup</button>
-    <button id="username-show" mat-flat-button color="primary">{{username}}</button>
-  </mat-toolbar-row>
+  <span class="title">{{title}}</span>
+  <button mat-flat-button color="primary" [routerLink]="['/events']">Events</button>
+  <button mat-flat-button color="primary" [routerLink]="['/authtest']">Add Event</button>
+  <button mat-flat-button color="primary" [routerLink]="['/login']">Login</button>
+  <button mat-flat-button color="primary" [routerLink]="['/signup']">Signup</button>
+  <button id="username-show" mat-flat-button color="primary">{{username}}</button>
 </mat-toolbar>
+
 <div class="container">
   <router-outlet></router-outlet>
 </div>

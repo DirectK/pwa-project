@@ -24,14 +24,10 @@ export class DBSyncService {
         await this.syncPromises[store];
       } else {
         // wait for socket connection to establish
-        return new Promise((resolve) => {
-          this.socket.on('connect', async function self() {
-            await this.sync(store);
-            this.socket.removeListener('connect', self);
-  
-            return resolve();
-          }.bind(this));
-        })
+        this.socket.on('connect', function self() {
+          this.sync(store);
+          this.socket.removeListener('connect', self);
+        }.bind(this));
       }
     }
   }

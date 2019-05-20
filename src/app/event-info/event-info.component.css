@@ -5,3 +5,15 @@ textarea {
 mat-form-field {
   display: block;
 }
+
+.gallery-image {
+  width: 100%;
+  max-width: 400px;
+  max-height: 400px;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.image-container {
+  position: relative;
+}
