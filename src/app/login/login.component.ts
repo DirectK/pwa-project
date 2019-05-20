@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import { User } from '../user';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,7 @@ export class LoginComponent implements OnInit {
   xhr = new XMLHttpRequest
   error = null;
 
-  constructor(private router: Router) { }
+  constructor(private router: Router, private appComponent: AppComponent) { }
 
   ngOnInit() {
   }
@@ -42,7 +43,8 @@ export class LoginComponent implements OnInit {
   route(res) {
     localStorage.setItem('jwtToken', res.token);
     localStorage.setItem('username', this.user.username);
-    this.router.navigateByUrl(res.route)
+    this.appComponent.username = this.user.username;
+    this.router.navigateByUrl(res.route);
   }
 
 }

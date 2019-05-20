@@ -3,11 +3,11 @@
   <mat-toolbar-row>
     <span class="title">{{title}}</span>
     <button mat-flat-button color="primary" [routerLink]="['/events']">Events</button>
-    <button mat-flat-button color="primary" [routerLink]="['/authtest']">Add Event</button>
-    <button mat-flat-button color="primary" [routerLink]="['/login']">Login</button>
-    <button mat-flat-button color="primary" [routerLink]="['/signup']">Signup</button>
-    <button id="username-show" mat-flat-button color="primary">{{username}}</button>
-    <button mat-flat-button color="primary" (click)=logout()>Logout</button>
+    <button *ngIf="username" mat-flat-button color="primary" [routerLink]="['/events/add']">Add Event</button>
+    <button *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/login']">Login</button>
+    <button *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/signup']">Signup</button>
+    <button *ngIf="username" id="username-show" mat-flat-button color="primary">{{username}}</button>
+    <button *ngIf="username" mat-flat-button color="primary" (click)=logout()>Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>
 
