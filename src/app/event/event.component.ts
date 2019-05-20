@@ -29,6 +29,7 @@ export class EventComponent implements OnInit {
     this.events = this.eventService.events;
 
     this.route.queryParamMap.subscribe(params => {
+      
       this.search = params.get('search');
 
       const startTime = params.get('startTime');
@@ -37,6 +38,10 @@ export class EventComponent implements OnInit {
       const endTime = params.get('endTime');
       this.endTime = endTime ? new Date(endTime).toDateString() : null;
     })
+  }
+
+  toTime(time) {
+    return new Date(time).toLocaleString();
   }
 
   toggleMap() {

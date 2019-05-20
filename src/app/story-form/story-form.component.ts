@@ -41,6 +41,7 @@ export class StoryFormComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.submitted = true;
     this.story.images = this.images;
+    this.story.username = localStorage.getItem('username');
     this.route.params.subscribe(async params => {
       this.story.eventId = parseInt(params.eventId);
       const storyId = await this.storyService.addStory(this.story);

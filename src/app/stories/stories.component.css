@@ -1,0 +1,11 @@
+.gallery-image {
+  width: 100%;
+  max-width: 200px;
+  max-height: 200px;
+  margin-bottom: 1em;
+  margin-top: 1em;
+}
+
+.image-container {
+  position: relative;
+}

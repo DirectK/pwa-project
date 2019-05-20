@@ -6,14 +6,16 @@
     </button>
     <div class="spacer d-inline-block d-sm-none"></div>
     <span class="title float-right">{{title}}</span>
-    <div class="d-none d-sm-inline-block">
-      <button mat-flat-button color="primary" [routerLink]="['/events']">Events</button>
-      <button *ngIf="username" mat-flat-button color="primary" [routerLink]="['/events/add']">Add Event</button>
-      <button *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/login']">Login</button>
-      <button *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/signup']">Signup</button>
-      <button *ngIf="username" id="username-show" mat-flat-button color="primary">{{username}}</button>
-      <button *ngIf="username" mat-flat-button color="primary" (click)=logout()>Logout</button>
-    </div>
+    <button class="d-none d-sm-inline-block" mat-flat-button color="primary" [routerLink]="['/events']">Events</button>
+    <button class="d-none d-sm-inline-block" *ngIf="username" mat-flat-button color="primary" [routerLink]="['/events/add']">Add Event</button>
+    <div class="spacer"></div>
+    <button class="d-none d-sm-inline-block" *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/login']">Login</button>
+    <button class="d-none d-sm-inline-block" *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/signup']">Signup</button>
+    <button class="d-none d-sm-inline-block" *ngIf="username" id="username-show" mat-flat-button color="primary">
+      <mat-icon>person</mat-icon>
+      {{username}}
+    </button>
+    <button class="d-none d-sm-inline-block" *ngIf="username" mat-flat-button color="primary" (click)=logout()>Logout</button>
   </mat-toolbar-row>
 </mat-toolbar>
 <mat-sidenav-container fxFlexFill>

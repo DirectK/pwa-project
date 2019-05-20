@@ -17,6 +17,7 @@ export class Event {
     timestamp: number;
     lastUpdated: Date;
     synced: number;
+    username: string;
 
     constructor(fields = {}) {
         this.name = "";

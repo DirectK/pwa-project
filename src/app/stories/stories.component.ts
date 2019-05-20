@@ -27,6 +27,7 @@ export class StoriesComponent implements OnInit {
 
       this.dbSyncService.sync('stories').then(async () => {
         this.stories = await this.storyService.getStories(this.eventId);
+        console.log(this.stories);
       });
     });
   }

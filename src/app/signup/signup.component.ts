@@ -11,7 +11,8 @@ export class SignupComponent implements OnInit {
 
   user = new User();
   submitted = false;
-  xhr = new XMLHttpRequest
+  xhr = new XMLHttpRequest;
+  success;
 
   constructor() { }
 
@@ -24,7 +25,8 @@ export class SignupComponent implements OnInit {
       password: this.user.password
     }
     this.xhr.send(JSON.stringify(userDetails))
-    console.log(JSON.stringify(userDetails) + ' sent')
+
+    this.success = 'User created successfully';
 
     this.xhr.onload = function() {
       let responseText = this.response;

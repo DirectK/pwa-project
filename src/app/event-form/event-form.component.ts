@@ -43,6 +43,7 @@ export class EventFormComponent implements OnInit, OnDestroy {
     this.snap()
     this.submitted = true;
     this.event.images = this.images;
+    this.event.username = localStorage.getItem('username');
     const eventId = await this.eventService.addEvent(this.event);
 
     this.router.navigateByUrl("/events/" + eventId);
