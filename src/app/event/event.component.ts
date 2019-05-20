@@ -10,6 +10,11 @@ import { BehaviorSubject } from 'rxjs';
   templateUrl: './event.component.html',
   styleUrls: ['./event.component.css']
 })
+
+/**  event component
+ * 
+ * 
+ */
 export class EventComponent implements OnInit {
 
   events: BehaviorSubject<Event[]>;

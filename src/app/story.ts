@@ -1,3 +1,4 @@
+/** story class */
 export class Story {
   id: number;
   eventId: number;

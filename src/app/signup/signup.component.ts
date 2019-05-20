@@ -15,7 +15,10 @@ export class SignupComponent implements OnInit {
 
   constructor() { }
 
+  /** submit signup request */
   async onSubmit() {
+    
+    //create HTTP request
     this.xhr.open('POST', 'http://localhost:3000/signup', true);
     this.xhr.setRequestHeader('Content-Type', 'application/json')
     this.xhr.withCredentials = true;
@@ -26,21 +29,24 @@ export class SignupComponent implements OnInit {
     this.xhr.send(JSON.stringify(userDetails))
     console.log(JSON.stringify(userDetails) + ' sent')
 
+    //wait for response
     this.xhr.onload = function() {
       let responseText = this.response;
       console.log(responseText);
       console.log('cors recieved')
       // process the response.
-      };
-     
-      this.xhr.onerror = function() {
-        console.log('There was an error!');
-      };
+    };
+    
+    //handle error
+    this.xhr.onerror = function() {
+      console.log('There was an error!');
+    };
   }
 
+  /** set default values */
   ngOnInit() {
-    this.user.username = "yerr"
-    this.user.password = "yerr"
+    this.user.username = ""
+    this.user.password = ""
   }
 
 }

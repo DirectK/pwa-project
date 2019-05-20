@@ -7,12 +7,18 @@ import { Event } from '../event';
   templateUrl: './event-info.component.html',
   styleUrls: ['./event-info.component.css']
 })
+
+/** component for showing the details of
+ * the selected event
+ */
 export class EventInfoComponent implements OnInit {
 
   constructor(private eventService: EventService) { }
 
   event;
 
+  /**gets all the required event details from the
+   * event service  */
   ngOnInit() {
     this.eventService.activeEvent.subscribe(event => {
       this.event = event;

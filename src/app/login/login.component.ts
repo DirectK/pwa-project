@@ -20,7 +20,10 @@ export class LoginComponent implements OnInit {
 
   constructor(private router: Router) { }
 
+  /** submit login request */
   async onSubmit() {
+
+    //create HTTP request
     this.xhr.open('POST', 'http://localhost:3000/login', true);
     this.xhr.setRequestHeader('Content-Type', 'application/json')
     this.xhr.withCredentials = true;
@@ -31,14 +34,18 @@ export class LoginComponent implements OnInit {
     this.xhr.send(JSON.stringify(userDetails))
     console.log(JSON.stringify(userDetails) + ' sent')
 
-
+    //wait for response
     this.xhr.onload = (event) => this.route()
 
-     this.xhr.onerror = function() {
-       console.log('There was an error!');
-     };
+    //handle error
+    this.xhr.onerror = function() {
+      console.log('There was an error!');
+    };
   }
 
+  /** helper method for http response,
+   * routing the user
+   */
   route() {
     let res = JSON.parse(this.xhr.response)
     localStorage.setItem('jwtToken', res.token);
@@ -47,8 +54,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user.username = "yerr"
-    this.user.password = "yerr"
+    this.user.username = ""
+    this.user.password = ""
   }
 
 }

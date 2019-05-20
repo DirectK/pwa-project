@@ -14,6 +14,11 @@ declare const lightGallery: any;
   templateUrl: './event-form.component.html',
   styleUrls: ['./event-form.component.css']
 })
+
+/**
+ * Handles the saving and submission of new events,
+ * including webRTC images.
+ */
 export class EventFormComponent implements OnInit, OnDestroy {
 
   @ViewChild("camVid")
@@ -31,14 +36,17 @@ export class EventFormComponent implements OnInit, OnDestroy {
 
   constructor(private eventService: EventService, private router: Router, private dbSyncService: DBSyncService) { }
 
+  /**sets default event location pin */
   ngOnInit() {
     this.event.location = new L.LatLng(50, -1);
   }
 
+  /**turns off camera on destruction of the form*/
   ngOnDestroy() {
     this.disableCamera();
   }
 
+  /**saves the event and routes the user to the event itself */
   async onSubmit() {
     this.snap()
     this.submitted = true;
@@ -49,6 +57,7 @@ export class EventFormComponent implements OnInit, OnDestroy {
     this.dbSyncService.uploadContent('events');
   }
 
+  /**initialises webRTC camera */
   enableCamera() {
     var session = {
       video : true
@@ -61,6 +70,7 @@ export class EventFormComponent implements OnInit, OnDestroy {
       })
   }
 
+  /** stops camera */
   disableCamera() {
     this.videoActive = false;
     if (this.camVid.nativeElement.srcObject) {
@@ -68,10 +78,12 @@ export class EventFormComponent implements OnInit, OnDestroy {
     }
   }
 
+  /** wipes image */
   unsnap() {
     this.imgData = null;
   }
 
+/**takes snap of webRTC image */
   snap() {
     const canvas = this.camCanvas.nativeElement;
     const width = this.camVid.nativeElement.videoWidth;
@@ -83,16 +95,19 @@ export class EventFormComponent implements OnInit, OnDestroy {
     this.imgData = this.camCanvas.nativeElement.toDataURL('image/png');
   }
 
+  /** save snap to event */
   saveImage() {
     this.images.push({ dataURL: this.imgData });
     this.imgData = null;
   }
 
+  /** remove image from event */
   removeImage(event) {
     const target = event.target.parentNode.parentNode.parentNode.firstChild;
     this.images = this.images.filter(image => target.src != image.dataURL);
   }
 
+  
   receiveMessage($event) {
     this.event.location = $event;
   }

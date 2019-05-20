@@ -9,6 +9,8 @@ import { StoryService } from '../story.service';
   templateUrl: './story.component.html',
   styleUrls: ['./story.component.css']
 })
+
+/** component for the story */
 export class StoryComponent implements OnInit {
 
   story: Story
@@ -16,6 +18,7 @@ export class StoryComponent implements OnInit {
 
   constructor(private route: ActivatedRoute, private storyService: StoryService) { }
 
+  /**  */
   ngOnInit() {
     this.route.params.subscribe( async params => {
       let story = await this.storyService.getStory(parseInt(params.storyId));
