@@ -15,6 +15,10 @@ export class AppComponent implements OnInit {
     this.username = localStorage.getItem('username')
   }
 
+  logout() {
+    localStorage.clear()
+  }
+
   ngOnInit() {}
 
 }
