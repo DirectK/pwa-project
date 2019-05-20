@@ -16,7 +16,7 @@ export class SearchEventsFormComponent implements OnInit {
     private router: Router,
     private dbSyncService: DBSyncService,
     private route: ActivatedRoute,
-    private eventsComponent: EventComponent
+    public eventsComponent: EventComponent
   ) { }
 
   search: string = '';

@@ -39,8 +39,6 @@ export class SignupComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.user.username = "yerr"
-    this.user.password = "yerr"
   }
 
 }

@@ -8,7 +8,6 @@ import { EventDetailComponent } from './event-detail/event-detail.component';
 import { ShowListButtonComponent } from './show-list-button/show-list-button.component';
 import { StoriesComponent } from './stories/stories.component';
 import { SearchEventsFormComponent } from './search-events-form/search-events-form.component';
-import { StoryComponent } from './story/story.component';
 import { EventFormComponent } from './event-form/event-form.component';
 import { StoryFormComponent } from './story-form/story-form.component';
 import { AppRoutingModule } from './app-routing.module';
@@ -31,7 +30,6 @@ import { NgxGalleryModule } from 'ngx-gallery';
     EventDetailComponent,
     ShowListButtonComponent,
     StoriesComponent,
-    StoryComponent,
     SearchEventsFormComponent,
     EventFormComponent,
     StoryFormComponent,

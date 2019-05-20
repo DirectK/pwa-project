@@ -1,16 +1,35 @@
 <!--The content below is only a placeholder and can be replaced.-->
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span class="title">{{title}}</span>
-    <button mat-flat-button color="primary" [routerLink]="['/events']">Events</button>
-    <button *ngIf="username" mat-flat-button color="primary" [routerLink]="['/events/add']">Add Event</button>
-    <button *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/login']">Login</button>
-    <button *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/signup']">Signup</button>
-    <button *ngIf="username" id="username-show" mat-flat-button color="primary">{{username}}</button>
-    <button *ngIf="username" mat-flat-button color="primary" (click)=logout()>Logout</button>
+    <button class="d-inline-block d-sm-none" mat-icon-button (click)="sidenav.toggle()" fxShow="true" fxHide.gt-sm>
+      <mat-icon>menu</mat-icon>
+    </button>
+    <div class="spacer d-inline-block d-sm-none"></div>
+    <span class="title float-right">{{title}}</span>
+    <div class="d-none d-sm-inline-block">
+      <button mat-flat-button color="primary" [routerLink]="['/events']">Events</button>
+      <button *ngIf="username" mat-flat-button color="primary" [routerLink]="['/events/add']">Add Event</button>
+      <button *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/login']">Login</button>
+      <button *ngIf="!username" mat-flat-button color="primary" [routerLink]="['/signup']">Signup</button>
+      <button *ngIf="username" id="username-show" mat-flat-button color="primary">{{username}}</button>
+      <button *ngIf="username" mat-flat-button color="primary" (click)=logout()>Logout</button>
+    </div>
   </mat-toolbar-row>
 </mat-toolbar>
-
-<div class="container">
-  <router-outlet></router-outlet>
-</div>
+<mat-sidenav-container fxFlexFill>
+  <mat-sidenav #sidenav>
+    <mat-nav-list >
+      <a (click)="sidenav.toggle()" mat-list-item [routerLink]="['/events']">Events</a>
+      <a (click)="sidenav.toggle()" *ngIf="username" mat-list-item color="primary" [routerLink]="['/events/add']">Add Event</a>
+      <a (click)="sidenav.toggle()" *ngIf="!username" mat-list-item color="primary" [routerLink]="['/login']">Login</a>
+      <a (click)="sidenav.toggle()" *ngIf="!username" mat-list-item color="primary" [routerLink]="['/signup']">Signup</a>
+      <a (click)="sidenav.toggle()" *ngIf="username" id="username-show" mat-list-item color="primary">{{username}}</a>
+      <a (click)="sidenav.toggle()" *ngIf="username" mat-list-item color="primary" (click)=logout()>Logout</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content fxFlexFill>
+    <div class="container">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>

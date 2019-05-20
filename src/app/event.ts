@@ -4,6 +4,10 @@ export class Event {
     id : number;
     name: string;
     description: string;
+    address1: string;
+    address2: string;
+    city: string;
+    postcode: string;
     images: object;
     startTime: Date;
     endTime: Date;
