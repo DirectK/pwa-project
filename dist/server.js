@@ -47,6 +47,7 @@ app.use(cors({
   credentials: true,
 }));
 
+//define stategy passport uses for authentication
 passport.use(new LocalStrategy(
   function(username, password, cb) { //cb = callback
     db.findUser(username, function(err, user) {
@@ -68,12 +69,12 @@ passport.use(new LocalStrategy(
   }
 ))
 
+//functions for passport sessioning - unused
 passport.serializeUser(function(user, done) {
   console.log('serialzing into session.......')
   console.log(user.username)
   done(null, user.username);
 });
-
 passport.deserializeUser(function(username, done) {
   console.log('deserialise called')
   let user = db.findUser(username, function(err, user) {
@@ -124,12 +125,11 @@ app.get('/urls_to_cache', (req, res) => {
 
 
 app.post('/signup', function(req, res) {
+  //try to see if there's already a user by that username
   db.findUser(res.username, function(err, user) {
-    if (!user) {
+    if (!user) { 
       console.log('user not found, signing up...')
       db.newUser(req.body.username, req.body.password)
-      const token = jwt.sign({username: req.body.username}, 'nerd')
-      return res.json({username: req.body.username, token});
     } else {
     console.log('user already exists...')
     }
@@ -151,6 +151,7 @@ app.post('/authtest', function(req, res) {
 })
 
 app.post('/login', passport.authenticate('local', {session: false}), function(req, res) {
+  //create & return JWT token if passport authenticates
   const token = jwt.sign({username: req.body.username}, 'nerd')
   console.log('authentication successful.')
   res.json({username: req.body.username, token: token, route: '/'});
@@ -162,9 +163,7 @@ app.get('/test', (req, res) => {
 
 app.get('/logout',
   function(req, res){
-    //req.logout();
-    //res.redirect('/');
-    res.json('yes')
+    req.logout();
   });
 
 

@@ -21,12 +21,14 @@ export class LoginComponent implements OnInit {
   ngOnInit() {
   }
 
+  /** submit login request */
   async onSubmit() {
     let userDetails = {
       username: this.user.username,
       password: this.user.password
     }
 
+    //create HTTP request
     fetch('http://localhost:3000/login', {
       method: "post", 
       body: JSON.stringify(userDetails),
@@ -40,6 +42,9 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  /** helper method for http response,
+   * routing the user
+   */
   route(res) {
     localStorage.setItem('jwtToken', res.token);
     localStorage.setItem('username', this.user.username);

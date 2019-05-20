@@ -9,6 +9,12 @@ import { DBSyncService } from '../dbsync.service';
   templateUrl: './search-events-form.component.html',
   styleUrls: ['./search-events-form.component.css']
 })
+
+/** form for searching events by:
+ * date
+ *  name
+ * location
+ */
 export class SearchEventsFormComponent implements OnInit {
 
   constructor(
@@ -29,6 +35,7 @@ export class SearchEventsFormComponent implements OnInit {
   };
   eventsFound: boolean = true;
 
+  /** initialisation, setup sync and search details */
   ngOnInit() {
     let syncNeeded = true;
     this.route.queryParamMap.subscribe(async queryParams => {
@@ -51,6 +58,9 @@ export class SearchEventsFormComponent implements OnInit {
     })
   }
 
+  /** when the search has been submitted, query the list of events
+   * then navigate to the results
+   */
   async onSubmit() {
     const newSearch = this.search != this.lastInput.search ||
       this.startTime != this.lastInput.startTime ||
@@ -66,6 +76,7 @@ export class SearchEventsFormComponent implements OnInit {
       this.router.navigate([], { queryParams });
     }
   }
+
 
   async performSearch(input) {
     const result = await this.eventService.getEvents(input);

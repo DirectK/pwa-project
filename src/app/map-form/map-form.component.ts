@@ -7,6 +7,12 @@ import * as L from 'leaflet';
   templateUrl: './map-form.component.html',
   styleUrls: ['./map-form.component.css']
 })
+
+/** Component for leaflet map - showing only
+ * 
+ * @Input events - list of events to be shown on map
+ * @Output messageEvent
+ */
 export class MapFormComponent implements OnInit {
 
   map: L.map;
@@ -20,6 +26,7 @@ export class MapFormComponent implements OnInit {
 
   constructor() { }
 
+  //when initialized setup map and get events
   ngOnInit() {
     this.lat = 53.381130; //where map and user marker are initiated
     this.lng = -1.470085;
@@ -40,6 +47,8 @@ export class MapFormComponent implements OnInit {
     this.messageEvent.emit(new L.latLng(this.lat, this.lng));
   }
 
+  
+/** crete new Leaflet marker that isn't draggable */
   newFixedMarker(latlng, title) {
     var marker = L.marker(latlng, {
       title: title,
@@ -51,6 +60,9 @@ export class MapFormComponent implements OnInit {
     this.fixedMarkers.push(marker);
   }
 
+  /** create new draggable leaflet marker and get its location when
+   * the markers moved
+  */
   newDraggableMarker(lat, lng) {
     var marker = L.marker([lat, lng], {
       title: 'New Event',
@@ -63,6 +75,7 @@ export class MapFormComponent implements OnInit {
 
   }
 
+  /** get the location of th marker */
   getDragMarkerLocation(event) {
     this.messageEvent.emit(this.draggableMarker.getLatLng());
   }

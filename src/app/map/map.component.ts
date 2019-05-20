@@ -12,6 +12,11 @@ import { EventComponent } from '../event/event.component';
   styleUrls: ['./map.component.css']
 })
 
+/** Component for leaflet map - showing only
+ * 
+ * @Input events - list of events to be shown on map
+ * @Output messageEvent
+ */
 export class MapComponent implements OnInit {
 
   map: L.map;
@@ -28,6 +33,7 @@ export class MapComponent implements OnInit {
     private router: Router
   ) { }
 
+  //when initialized setup map and get events
   async ngOnInit() {
     this.lat = 53.381130; //where map and user marker are initiated
     this.lng = -1.470085;
@@ -44,6 +50,7 @@ export class MapComponent implements OnInit {
     this.eventService.events.subscribe(events => this.populateMap(events));
   }
 
+  /**using list of events, create marker for each */
   populateMap(events) {
     if (events != null) {
       this.fixedMarkers.forEach(marker => this.map.removeLayer(marker));
@@ -55,6 +62,7 @@ export class MapComponent implements OnInit {
     }
   }
 
+/** crete new Leaflet marker that isn't draggable */
   newFixedMarker(latlng, title, id) {
     var marker = L.marker(latlng, {
       id: id,

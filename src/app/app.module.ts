@@ -1,3 +1,9 @@
+/** required for angular,
+ * imports and declares all the
+ * modules/components required
+ * for the app
+ */
+
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { FormsModule }   from '@angular/forms';

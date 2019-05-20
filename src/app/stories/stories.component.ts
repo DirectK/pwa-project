@@ -10,6 +10,8 @@ import { DBSyncService } from '../dbsync.service';
   templateUrl: './stories.component.html',
   styleUrls: ['./stories.component.css']
 })
+
+/** compoent containing list of stories */
 export class StoriesComponent implements OnInit {
 
   eventId: number
@@ -21,6 +23,9 @@ export class StoriesComponent implements OnInit {
     private dbSyncService: DBSyncService
   ) { }
 
+  /** on initialisation, get list of stories from required
+   * destination
+   */
   ngOnInit() {
     this.route.parent.params.subscribe(params => {
       this.eventId = parseInt(params.eventId);

@@ -6,6 +6,11 @@ import {Router} from '@angular/router';
   templateUrl: './auth-intermediary.component.html',
   styleUrls: ['./auth-intermediary.component.css']
 })
+
+/** intermediary class for blocking routes
+ * 
+ * UNUSED
+ */
 export class AuthIntermediaryComponent implements OnInit {
 
   xhr = new XMLHttpRequest

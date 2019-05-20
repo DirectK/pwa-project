@@ -1,5 +1,6 @@
 import * as L from 'leaflet';
 
+/** event class */
 export class Event {
     id : number;
     name: string;

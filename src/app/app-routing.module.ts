@@ -1,3 +1,6 @@
+/** declares all the routes
+ */
+
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -12,6 +15,7 @@ import { SignupComponent } from './signup/signup.component';
 import { AuthIntermediaryComponent } from './auth-intermediary/auth-intermediary.component';
 import { AuthGuardService } from './auth-guard.service';
 
+/** paths and components they render */
 const routes: Routes = [
   { path: '', redirectTo: 'events', pathMatch: 'full' },
   { path: 'authtest', component: AuthIntermediaryComponent },

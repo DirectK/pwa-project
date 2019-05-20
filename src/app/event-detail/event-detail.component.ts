@@ -9,6 +9,10 @@ import { Event } from '../event';
   templateUrl: './event-detail.component.html',
   styleUrls: ['./event-detail.component.css']
 })
+
+/** component for showing the details of
+ * the selected event
+ */
 export class EventDetailComponent implements OnInit {
 
   stories: Story[]
